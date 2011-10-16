@@ -3,9 +3,9 @@
 # ----------------------- #
 
 url: http://m5h.github.com
-title: My Octopress Blog
+title: Simply Hacking
 subtitle: A blogging framework for hackers.
-author: Your Name
+author: Mikael Hallendal
 simple_search: http://google.com/search
 
 # RSS / Email (optional) subscription links (change if using something like Feedburner)
