@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Initial release of MHConvore
+comments: true
 ---
 Just pushed the first cut of a small framework to connect with the newly launched chatservice [Convore](http://convore.com/). In short Convore is an attempt to create a better way to chat than IRC and also support a web frontend while making it possible to connect with native clients.
 
@@ -9,14 +10,14 @@ The API will likely change a bit and it's fresh out of the editor so might be a 
 The API makes heavy use of blocks for actions initiated from your code and a client listener for notifications initiated from the server.
 
 A small example of how you use the API, I will add a better example later.
-{% highlight objc %}
+``` objc
 @interface AppDelegate : NSObject <NSApplicationDelegate, MHConvoreClientListener> {
 @private
     MHConvoreClient *client;
 }
-{% endhighlight %}
+```
 
-{% highlight objc %}
+``` objc
 - (void)connectToServer
 {
     MHConvoreClient *client = [MHConvoreClient clientWithUsername:@"u" password:@"p"];
@@ -37,7 +38,7 @@ A small example of how you use the API, I will add a better example later.
 {
     NSLog(@"[%@]: %@", message.user.name, message.message);
 }
-{% endhighlight %}
+```
 
 To connect to Convore you first need to create an account through their website.
 

@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Spacedust Xcode Theme
+comments: true
 ---
 
 I decided it was time to create a new Xcode theme and created one that works well with dark backgrounds. It's called _Spacedust_ and should look good on most dark tints.

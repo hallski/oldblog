@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Blogging at Github and Simply Hacking
+comments: true
 ---
 
 p(meta). 20 Apr 2009 - Stockholm

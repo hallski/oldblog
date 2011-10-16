@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Core Animation Layered Clock
+comments: true
 ---
 I wanted to get into Core Animation a bit over the weekend and decided to write a simple digital clock. With the help from [Richard](http://rhult.github.com/) I set out to hack it up and figured it might be useful for others just starting out with Core Animation.
 
@@ -12,7 +13,7 @@ After creating a normal Cocoa Application and setting up a custom view in Interf
 
 Layers in Core Animation are built up as a tree where the layer you set to your view with `setLayer:` is the root layer. All other layers are added as sublayers to the root layer or another layer with `addSublayer:`. In the code snippets below `backgroundLayer` is my root layer.
 
-{% highlight objc %}
+``` objc
 - (CALayer *)setupLayers
 {
     backgroundLayer = [self setupBackgroundLayer];
@@ -39,7 +40,7 @@ Layers in Core Animation are built up as a tree where the layer you set to your 
 {
     [self setWantsLayer:YES];
 }
-{% endhighlight %}
+```
 
 `ClockTimer` is a simple class that updates the string displaying the time once a second. This string is available through the property `outputString` on the `ClockTimer` object.
 
@@ -51,7 +52,7 @@ The background layer is created as a `CAGradientLayer` to give the clock backgro
 
 In order to help with positioning of layers Core Animation comes with the notion of Layout Managers which can be added to a layer in order to layout its sublayers. The CAConstraintLayoutManager lets us set constraints on the layers sublayers in order to control how they are positioned. In this case the constraints will be set on the clock face to make it centered on the background.
 
-{% highlight objc %}
+``` objc
 - (CALayer *)setupBackgroundLayer 
 {
     backgroundLayer = [CAGradientLayer layer];
@@ -72,7 +73,7 @@ In order to help with positioning of layers Core Animation comes with the notion
     
     return backgroundLayer;
 }
-{% endhighlight %}
+```
 
 The ClockFace Layer:
 --------------------
@@ -82,7 +83,7 @@ Using Cocoa bindings I connect the text layers `string` property with the `outpu
 
 This is also where we setup the constraints mentioned above to make sure that the text is centered in relation to its super layer (in this case the background).
 
-{% highlight objc %}
+``` objc
 - (CALayer *)setupClockFaceLayer {
     CATextLayer *clockFaceLayer = [CATextLayer layer];
     [clockFaceLayer bind:@"string" toObject:clockTimer withKeyPath:@"outputString" options:nil];
@@ -103,13 +104,13 @@ This is also where we setup the constraints mentioned above to make sure that th
     
     return clockFaceLayer;
 }
-{% endhighlight %}
+```
 
 The Border Layer:
 -----------------
 There are likely other ways of doing this but by using a separate layer I can use built in functionality to draw a border around a layer. I make the layer slightly smaller than the background layer, set its corner radius to the same value used for the background and simply set it to draw its border with a white color.
 
-{% highlight objc %}
+``` objc
 - (CALayer *)setupBorderLayer
 {
     CALayer *borderLayer = [CALayer layer];
@@ -121,7 +122,8 @@ There are likely other ways of doing this but by using a separate layer I can us
     
     return borderLayer;    
 }
-{% endhighlight %}
+```
+
 Notice that I do not have to set any constraints here as I create the layer frame from simply shrinking the frame size on all sides which ensures it will be set in the middle already.
 
 The Gloss Layer:
@@ -130,7 +132,7 @@ As a final touch I wanted to add the shine to give the clock a glossy look. The 
 
 Even if we set the same corner radius as the background layer the layer will happily draw the image outside of this unless we call `setMasksToBounds` to ensure that it doesn't draw the image outside of the rounded corners.
 
-{% highlight objc %}
+``` objc setupGlossLayer
 - (CALayer *)setupGlossLayer
 {
     CALayer *glossLayer = [CALayer layer];
@@ -150,11 +152,11 @@ Even if we set the same corner radius as the background layer the layer will hap
 
     return glossLayer;
 }
-{% endhighlight %}
+```
 
 Finally I subclassed `NSWindow` in order to turn off the window decoration and shape the window as the background layer.
 
-{% highlight objc %}
+``` objc
 - (id)initWithContentRect:(NSRect)contentRect
                 styleMask:(NSUInteger)aStyle
                   backing:(NSBackingStoreType)bufferingType
@@ -173,7 +175,7 @@ Finally I subclassed `NSWindow` in order to turn off the window decoration and s
     
     return self;
 }
-{% endhighlight %}
+```
 
 `NSBorderlessWindowMask` makes the window draw without the border and `setOpaque` together with setting the background color to `[NSColor clearColor]`. Using the `NSPopUpMenuWindowLevel` ensures that the clock is always on top of other windows.
 
