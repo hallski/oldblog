@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Code Separation Using Blocks
-comments: yes
+comments: true
 ---
 This is a short blog entry to describe how you can use blocks to seperate a generic code from problem specific using blocks. Those that have been looking at [Project Euler](http://projecteuler.net) might recognize this problem description.
 
