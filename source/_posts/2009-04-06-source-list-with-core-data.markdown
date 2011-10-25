@@ -11,7 +11,7 @@ Approaches
 ----------
 My first plan was to create some kind of layer in between Core Data and the NSTreeController but that quickly added a lot of complexity and code. The second solution was to create the headers and put them in Core Data the first time you start the application. While this was easily done it felt a bit hackish.
 
-After spending a couple of days with this, trying out various solutions and ideas I and [Richard](http://twitter.com/rhult) discussed the topic, wondering if maybe Core Data had some builtin support for this.
+After spending a couple of days with this, trying out various solutions and ideas me and [Richard](http://twitter.com/rhult) discussed the topic, wondering if maybe Core Data had some builtin support for this.
 
 Twenty minutes and some fifty lines of code later I looked at the screen, amazed at how awesome Core Data is. This is what I ended up with, mind though that it's not a full tutorial but only the crucial steps, you still need to know how to connect it all with the NSTreeController and NSOutlineView.
 
