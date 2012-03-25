@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Simply Hacking]]></title>
-  <link href="http://simplyhacking.com/atom.xml" rel="self"/>
-  <link href="http://simplyhacking.com/"/>
-  <updated>2012-03-26T00:13:25+02:00</updated>
-  <id>http://simplyhacking.com/</id>
+  <link href="http://mhallendal.github.com/atom.xml" rel="self"/>
+  <link href="http://mhallendal.github.com/"/>
+  <updated>2012-03-26T00:18:48+02:00</updated>
+  <id>http://mhallendal.github.com/</id>
   <author>
     <name><![CDATA[Mikael Hallendal]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Initial release of MHConvore]]></title>
-    <link href="http://simplyhacking.com/mhconvore.html"/>
+    <link href="http://mhallendal.github.com/mhconvore.html"/>
     <updated>2011-02-16T00:00:00+01:00</updated>
-    <id>http://simplyhacking.com/mhconvore</id>
+    <id>http://mhallendal.github.com/mhconvore</id>
     <content type="html"><![CDATA[<p>Just pushed the first cut of a small framework to connect with the newly launched chatservice <a href="http://convore.com/">Convore</a>. In short Convore is an attempt to create a better way to chat than IRC and also support a web frontend while making it possible to connect with native clients.</p>
 
 <p>The API will likely change a bit and it&#8217;s fresh out of the editor so might be a bit flaky still.</p>
@@ -92,9 +92,9 @@
   
   <entry>
     <title type="html"><![CDATA[Code Separation Using Blocks]]></title>
-    <link href="http://simplyhacking.com/code-separation-using-blocks.html"/>
+    <link href="http://mhallendal.github.com/code-separation-using-blocks.html"/>
     <updated>2011-01-24T00:00:00+01:00</updated>
-    <id>http://simplyhacking.com/code-separation-using-blocks</id>
+    <id>http://mhallendal.github.com/code-separation-using-blocks</id>
     <content type="html"><![CDATA[<p>This is a short blog entry to describe how you can use blocks to seperate a generic code from problem specific using blocks. Those that have been looking at <a href="http://projecteuler.net">Project Euler</a> might recognize this problem description.</p>
 
 <p>The program is supposed to calculate the sum of all even-valued <a href="http://en.wikipedia.org/wiki/Fibonacci_number">Fibonacci numbers</a> that doesn&#8217;t exceed a <tt>STOP_VALUE</tt>.</p>
@@ -139,9 +139,9 @@
   
   <entry>
     <title type="html"><![CDATA[Debug Method in Xcode]]></title>
-    <link href="http://simplyhacking.com/debug-method-in-xcode.html"/>
+    <link href="http://mhallendal.github.com/debug-method-in-xcode.html"/>
     <updated>2010-08-18T00:00:00+02:00</updated>
-    <id>http://simplyhacking.com/debug-method-in-xcode</id>
+    <id>http://mhallendal.github.com/debug-method-in-xcode</id>
     <content type="html"><![CDATA[<p>I often find myself add a bunch of <tt>#ifdef</tt>s for code that I only want executed during the development but not in the shipped products. In order to make the code a bit easier to read I decided to make a small method that takes a C block (available in iOS 4.0 and Mac OS X 10.6) instead.</p>
 
 <p>You would use it like this:</p>
@@ -181,7 +181,7 @@
 
 <p>You can download <tt>debug.[ch]</tt> from <a href="http://gist.github.com/534487">GitHub</a> and simply add them to your project. You also need to edit your project settings for the Debug configuration to set the <tt>DEBUG</tt> macro.</p>
 
-<p><img src="http://simplyhacking.com/images/posts/project-settings-debug.png" alt="Project Settings Dialog" /></p>
+<p><img src="http://mhallendal.github.com/images/posts/project-settings-debug.png" alt="Project Settings Dialog" /></p>
 
 <p><a href="http://gist.github.com/534487">http://gist.github.com/534487</a></p>
 ]]></content>
@@ -189,12 +189,12 @@
   
   <entry>
     <title type="html"><![CDATA[Spacedust Xcode Theme for Xcode 4]]></title>
-    <link href="http://simplyhacking.com/spacedust-xcode-theme-for-xcode-4.html"/>
+    <link href="http://mhallendal.github.com/spacedust-xcode-theme-for-xcode-4.html"/>
     <updated>2010-08-16T00:00:00+02:00</updated>
-    <id>http://simplyhacking.com/spacedust-xcode-theme-for-xcode-4</id>
+    <id>http://mhallendal.github.com/spacedust-xcode-theme-for-xcode-4</id>
     <content type="html"><![CDATA[<p>Thanks to <a href="http://gist.github.com/488120">mrevils script</a> to convert Xcode 3 themes to Xcode 4 I updated my <a href="http://simplyhacking.com/spacedust-xcode-theme.html">Spacedust</a> theme to Xcode 4.</p>
 
-<p><img src="http://simplyhacking.com/images/posts/spacedust-xcode-theme.png"/></p>
+<p><img src="http://mhallendal.github.com/images/posts/spacedust-xcode-theme.png"/></p>
 
 <p>Download and installation instructions are available at in the link below.</p>
 
@@ -204,16 +204,16 @@
   
   <entry>
     <title type="html"><![CDATA[Spacedust Xcode Theme]]></title>
-    <link href="http://simplyhacking.com/spacedust-xcode-theme.html"/>
+    <link href="http://mhallendal.github.com/spacedust-xcode-theme.html"/>
     <updated>2010-01-30T00:00:00+01:00</updated>
-    <id>http://simplyhacking.com/spacedust-xcode-theme</id>
+    <id>http://mhallendal.github.com/spacedust-xcode-theme</id>
     <content type="html"><![CDATA[<p>I decided it was time to create a new Xcode theme and created one that works well with dark backgrounds. It&#8217;s called <em>Spacedust</em> and should look good on most dark tints.</p>
 
-<p><img src="http://simplyhacking.com/images/posts/spacedust-xcode-theme.png"/></p>
+<p><img src="http://mhallendal.github.com/images/posts/spacedust-xcode-theme.png"/></p>
 
 <p>Feel free to grab it if you like it.</p>
 
-<p><a href="http://simplyhacking.com/files/Spacedust.xccolortheme.zip" onClick="javascript: pageTracker._trackPageview('/files/Spacedust.xccolortheme.zip');">Spacedust.xccolortheme.zip</a></p>
+<p><a href="http://mhallendal.github.com/files/Spacedust.xccolortheme.zip" onClick="javascript: pageTracker._trackPageview('/files/Spacedust.xccolortheme.zip');">Spacedust.xccolortheme.zip</a></p>
 
 <p>To install it, simply unpack it and place <code>Spacedust.xccolortheme.zip</code> in:
 <code>~/Library/Application Support/Xcode/Color\ Themes</code>.</p>
@@ -222,16 +222,16 @@
   
   <entry>
     <title type="html"><![CDATA[Core Animation Layered Clock]]></title>
-    <link href="http://simplyhacking.com/core-animation-layered-clock.html"/>
+    <link href="http://mhallendal.github.com/core-animation-layered-clock.html"/>
     <updated>2009-10-12T00:00:00+02:00</updated>
-    <id>http://simplyhacking.com/core-animation-layered-clock</id>
+    <id>http://mhallendal.github.com/core-animation-layered-clock</id>
     <content type="html"><![CDATA[<p>I wanted to get into Core Animation a bit over the weekend and decided to write a simple digital clock. With the help from <a href="http://rhult.github.com/">Richard</a> I set out to hack it up and figured it might be useful for others just starting out with Core Animation.</p>
 
-<p><img src="http://simplyhacking.com/images/posts/glossy-clock.png" alt="Resulting App" /></p>
+<p><img src="http://mhallendal.github.com/images/posts/glossy-clock.png" alt="Resulting App" /></p>
 
 <p>After creating a normal Cocoa Application and setting up a custom view in Interface Builder it&#8217;s time to setup the layers that will make up the final interface. Make sure that you set the custom view to your class so that it is actually used:</p>
 
-<p><img src="http://simplyhacking.com/images/posts/glossy-clock-ib.png" alt="Info panel in Interface Builder" /></p>
+<p><img src="http://mhallendal.github.com/images/posts/glossy-clock-ib.png" alt="Info panel in Interface Builder" /></p>
 
 <p>Layers in Core Animation are built up as a tree where the layer you set to your view with <code>setLayer:</code> is the root layer. All other layers are added as sublayers to the root layer or another layer with <code>addSublayer:</code>. In the code snippets below <code>backgroundLayer</code> is my root layer.</p>
 
@@ -523,9 +523,9 @@
   
   <entry>
     <title type="html"><![CDATA[Reversing an array in Objective C]]></title>
-    <link href="http://simplyhacking.com/reverse-array-in-objc.html"/>
+    <link href="http://mhallendal.github.com/reverse-array-in-objc.html"/>
     <updated>2009-10-09T00:00:00+02:00</updated>
-    <id>http://simplyhacking.com/reverse-array-in-objc</id>
+    <id>http://mhallendal.github.com/reverse-array-in-objc</id>
     <content type="html"><![CDATA[<p>Was looking for the best way to reverse an array in Objective C and stumbled over this solution that might not be obvious to everyone (wasn&#8217;t to me at least).</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -537,10 +537,10 @@
   
   <entry>
     <title type="html"><![CDATA[Macruby Support in any Cocoa Application]]></title>
-    <link href="http://simplyhacking.com/macruby-support-in-any-cocoa-application.html"/>
+    <link href="http://mhallendal.github.com/macruby-support-in-any-cocoa-application.html"/>
     <updated>2009-05-06T00:00:00+02:00</updated>
-    <id>http://simplyhacking.com/macruby-support-in-any-cocoa-application</id>
-    <content type="html"><![CDATA[<p>Yesterday I published a post about <a href="http://simplyhacking.com/cocoa-prototyping-with-webview.html">Cocoa Prototyping with Webview</a> and today I found out about <a href="http://www.macruby.org/">Macruby</a> thanks to <a href="http://twitter.com/sarnesjo">@sarnesjo</a>. Already looking for ways of prototyping in Cocoa it&#8217;s hard to not find Macruby very interesting.</p>
+    <id>http://mhallendal.github.com/macruby-support-in-any-cocoa-application</id>
+    <content type="html"><![CDATA[<p>Yesterday I published a post about <a href="http://mhallendal.github.com/cocoa-prototyping-with-webview.html">Cocoa Prototyping with Webview</a> and today I found out about <a href="http://www.macruby.org/">Macruby</a> thanks to <a href="http://twitter.com/sarnesjo">@sarnesjo</a>. Already looking for ways of prototyping in Cocoa it&#8217;s hard to not find Macruby very interesting.</p>
 
 <p>Macruby turns out to be a very powerful tool for prototyping (as well as writing entire applications in) as it fits perfectly fine in a normal Objective-C code base. What I wanted was something like this:</p>
 
@@ -575,11 +575,11 @@
 
 <p>In order to link to the Macruby framework you need to use garbage collection in your project, if you aren&#8217;t already you enable it in the project inspector:</p>
 
-<p><img src="http://simplyhacking.com/images/posts/macruby-in-xcode-gc.png" alt="Set the project to use Garbage Collection" /></p>
+<p><img src="http://mhallendal.github.com/images/posts/macruby-in-xcode-gc.png" alt="Set the project to use Garbage Collection" /></p>
 
 <p>Next you need to make your project link against the Macruby framework:</p>
 
-<p><img src="http://simplyhacking.com/images/posts/macruby-in-xcode-add-framework.png" alt="Add the Macruby framework" /></p>
+<p><img src="http://mhallendal.github.com/images/posts/macruby-in-xcode-add-framework.png" alt="Add the Macruby framework" /></p>
 
 <p>That&#8217;s it for the project settings, let&#8217;s hook it up in the code. When you use the built-in project template for a Macruby project a small Ruby file called <em>rb_main.rb</em> is created for you. Since I&#8217;m using a generic Cocoa application template I needed to create this file and simply copied the file into my new project (its code below). It loads all Ruby files in your bundle and starts the Cocoa main loop.</p>
 
@@ -633,15 +633,15 @@
 
 <p>With these changes you can now start writing code in either Ruby or Objective-C within the same project. Here are the files I ended up with in my very small example.</p>
 
-<p><img src="http://simplyhacking.com/images/posts/macruby-in-xcode-files.png" alt="Example Files" /></p>
+<p><img src="http://mhallendal.github.com/images/posts/macruby-in-xcode-files.png" alt="Example Files" /></p>
 
 <p>The final application simply shows a small window with a button:</p>
 
-<p><img src="http://simplyhacking.com/images/posts/macruby-in-xcode-example.png" alt="Example window" /></p>
+<p><img src="http://mhallendal.github.com/images/posts/macruby-in-xcode-example.png" alt="Example window" /></p>
 
 <p>Make sure to watch the great <a href="http://pragmaticstudio.com/screencasts/6-macruby">introductionary screencast</a> then download the example project and get started tinkering.</p>
 
-<p><a href="http://simplyhacking.com/downloads/posts/ObjcMacRuby.tar.gz">Example project</a></p>
+<p><a href="http://mhallendal.github.com/downloads/posts/ObjcMacRuby.tar.gz">Example project</a></p>
 
 <p>If you find this as cool and useful as I did, let me hear about it!</p>
 
@@ -651,9 +651,9 @@
   
   <entry>
     <title type="html"><![CDATA[Cocoa Prototyping with Webview]]></title>
-    <link href="http://simplyhacking.com/cocoa-prototyping-with-webview.html"/>
+    <link href="http://mhallendal.github.com/cocoa-prototyping-with-webview.html"/>
     <updated>2009-05-05T00:00:00+02:00</updated>
-    <id>http://simplyhacking.com/cocoa-prototyping-with-webview</id>
+    <id>http://mhallendal.github.com/cocoa-prototyping-with-webview</id>
     <content type="html"><![CDATA[<p>While Interface Builder makes it really easy to quickly put together and test the overall design of your user interface it doesn&#8217;t help much when it comes to its overall flow. In any non-trivial application you are likely to have some custom views or view switching.</p>
 
 <p>For example, say that you want to try out whether it makes sense to use a source list in order to navigate the application and have your content view switch based on what you select in it.</p>
@@ -664,7 +664,7 @@
 
 <p>To give an idea of what it does, take a look at the following screenshot showing a basic prototype UI consisting of two suchs views embedded in a split view.</p>
 
-<p><img src="http://simplyhacking.com/images/posts/html-prototype-ui.png" alt="Prototyped UI, using PrototypeView" /></p>
+<p><img src="http://mhallendal.github.com/images/posts/html-prototype-ui.png" alt="Prototyped UI, using PrototypeView" /></p>
 
 <p>Using the PrototypeView is easy.</p>
 
@@ -672,7 +672,7 @@
 
 <p>Using Interface Builder, create the UI you want and put custom views where you want to prototype using the <code>PrototypeView</code>.</p>
 
-<p><img src="http://simplyhacking.com/images/posts/html-prototype-ib.png" alt="Setting class to PrototypeView" /></p>
+<p><img src="http://mhallendal.github.com/images/posts/html-prototype-ib.png" alt="Setting class to PrototypeView" /></p>
 
 <p>I used a class called <code>AppController</code> with two outlets to the prototype views by creating an <code>NSObject</code> subclass and set it up in Interface Builder by dragging an <code>NSObject</code> from the library and setting the class to <code>AppController</code> like above.</p>
 
@@ -763,7 +763,7 @@
 
 <p>That&#8217;s it, happy prototyping!</p>
 
-<p>For a closer look you can see the <a href="http://gist.github.com/106856">PrototypeView source code</a> or download the example project I used as a <a href="http://simplyhacking.com/downloads/posts/HtmlPrototype.tar.gz">tarball</a>.</p>
+<p>For a closer look you can see the <a href="http://gist.github.com/106856">PrototypeView source code</a> or download the example project I used as a <a href="http://mhallendal.github.com/downloads/posts/HtmlPrototype.tar.gz">tarball</a>.</p>
 
 <p>I&#8217;d love any feedback on how to improve this and possibly even supporting using JavaScript to communicate both ways with the HTML view in order to let the application update the views dynamically.</p>
 ]]></content>
@@ -771,9 +771,9 @@
   
   <entry>
     <title type="html"><![CDATA[Blogging at Github and Simply Hacking]]></title>
-    <link href="http://simplyhacking.com/blog-at-github.html"/>
+    <link href="http://mhallendal.github.com/blog-at-github.html"/>
     <updated>2009-04-20T00:00:00+02:00</updated>
-    <id>http://simplyhacking.com/blog-at-github</id>
+    <id>http://mhallendal.github.com/blog-at-github</id>
     <content type="html"><![CDATA[<p class="meta">20 Apr 2009 &#8211; Stockholm</p>
 <p>Decided to move my blog to a simpler solution by using Github and the nice <a href="http://github.com/mojombo/jekyll">Jekyll</a> site generator by <a href="http://tom.preston-werner.com/">Tom Preston-Werner</a>.</p>
 <p>Still need to tweak the stylesheetes a bit to not be a total rip off from Toms (which he is kind enough to let others use) but I definitely like the clean design.</p>
@@ -782,12 +782,12 @@
   
   <entry>
     <title type="html"><![CDATA[Source List with Core Data]]></title>
-    <link href="http://simplyhacking.com/source-list-with-core-data.html"/>
+    <link href="http://mhallendal.github.com/source-list-with-core-data.html"/>
     <updated>2009-04-06T00:00:00+02:00</updated>
-    <id>http://simplyhacking.com/source-list-with-core-data</id>
+    <id>http://mhallendal.github.com/source-list-with-core-data</id>
     <content type="html"><![CDATA[<p>Last week I decided to look into how to create a source list that is backed by Core Data with section headers created from code. New to Cocoa I set out to Google for a solution but surprisingly enough I didn&#8217;t find a lot about how to achieve this (or I simply googled for the wrong things). After a few days I managed to derive, what I believe, an elegant solution to this and figured it could be useful for others wanting to do this.</p>
 
-<p><img src="http://simplyhacking.com/images/posts/sl-cd-result.png" alt="The planned source list" /></p>
+<p><img src="http://mhallendal.github.com/images/posts/sl-cd-result.png" alt="The planned source list" /></p>
 
 <h2>Approaches</h2>
 
@@ -805,7 +805,7 @@
 
 <p><em>Section</em> will have a <code>name</code> attribute and a one-to-many relationship to <em>Item</em> called <code>children</code>. <em>Item</em> will have a <code>name</code> and a reverse to-one relationship back to <em>Section</em> called <code>section</code>. Make sure you <strong>make this relationship transient</strong> to tell Core Data that this relationship only exists runtime and should not be stored.</p>
 
-<p><img src="http://simplyhacking.com/images/posts/sl-cd-datamodel1.png" alt="The data model" /></p>
+<p><img src="http://mhallendal.github.com/images/posts/sl-cd-datamodel1.png" alt="The data model" /></p>
 
 <p>The <em>NSTreeController</em> has a property called <code>childrenKeyPath</code> that defines the key path to retrieve an array of children from each of the nodes in the tree. All nodes displayed in the tree need to respond to this key path. Since <em>Item</em>s don&#8217;t have children it is not included in the data model (though you could have added it in the model designer but in my opinion isn&#8217;t as nice), I will instead create a subclass of <em>NSManagedObject</em> to represent an <em>Item</em>.</p>
 
@@ -963,9 +963,9 @@
   
   <entry>
     <title type="html"><![CDATA[Expanding NSOutlineView nodes at application start]]></title>
-    <link href="http://simplyhacking.com/expanding-nsoutlineview-nodes-at-application-start.html"/>
+    <link href="http://mhallendal.github.com/expanding-nsoutlineview-nodes-at-application-start.html"/>
     <updated>2009-04-06T00:00:00+02:00</updated>
-    <id>http://simplyhacking.com/expanding-nsoutlineview-nodes-at-application-start</id>
+    <id>http://mhallendal.github.com/expanding-nsoutlineview-nodes-at-application-start</id>
     <content type="html"><![CDATA[<p>A problem when you want to expand some items in an <em>NSOutlineView</em> programatically at application start is that the <em>NSTreeController</em> prepares it&#8217;s content after <code>awakeFromNib</code> is called on your controller.</p>
 
 <p>To ensure that the data is loaded before you try to expand the items you can observe the <code>content</code> key on the tree controller and expand the nodes as you receive the the <code>observeValueForKeyPath:</code> message as shown below:</p>
@@ -1023,9 +1023,9 @@
   
   <entry>
     <title type="html"><![CDATA[Retrieving the real object when using NSOutlineView with an NSTreeController]]></title>
-    <link href="http://simplyhacking.com/nstreecontroller-wrapping-object.html"/>
+    <link href="http://mhallendal.github.com/nstreecontroller-wrapping-object.html"/>
     <updated>2009-04-04T00:00:00+02:00</updated>
-    <id>http://simplyhacking.com/nstreecontroller-wrapping-object</id>
+    <id>http://mhallendal.github.com/nstreecontroller-wrapping-object</id>
     <content type="html"><![CDATA[<p>As I just started out with Cocoa and started looking into the NSTreeController and NSOutlineView I realized that the objects seen by the outline view isn&#8217;t the same as the ones you see when working with the tree controller.</p>
 
 <p>The NSTreeController wraps your objects into another object and it took me some digging before I realized that you need to call <code>representedObject</code> to fetch the <em>real</em> object.</p>
@@ -1059,9 +1059,9 @@
   
   <entry>
     <title type="html"><![CDATA[Removing a remote branch in Git]]></title>
-    <link href="http://simplyhacking.com/removing-a-remote-branch-in-git.html"/>
+    <link href="http://mhallendal.github.com/removing-a-remote-branch-in-git.html"/>
     <updated>2008-06-21T00:00:00+02:00</updated>
-    <id>http://simplyhacking.com/removing-a-remote-branch-in-git</id>
+    <id>http://mhallendal.github.com/removing-a-remote-branch-in-git</id>
     <content type="html"><![CDATA[<p><strong>This is a repost from my old blog</strong></p>
 
 <p>This is something I’ve had to checkup a few times so I figured it would be useful both for myself and for others to keep around in a blog post.</p>
@@ -1077,9 +1077,9 @@
   
   <entry>
     <title type="html"><![CDATA[Using Twitter4R on Mac OS X]]></title>
-    <link href="http://simplyhacking.com/using-twitter4r-on-mac-os-x.html"/>
+    <link href="http://mhallendal.github.com/using-twitter4r-on-mac-os-x.html"/>
     <updated>2008-05-31T00:00:00+02:00</updated>
-    <id>http://simplyhacking.com/using-twitter4r-on-mac-os-x</id>
+    <id>http://mhallendal.github.com/using-twitter4r-on-mac-os-x</id>
     <content type="html"><![CDATA[<p><strong>This is a repost from my old blog</strong></p>
 
 <p>Was playing around a bit with the Twitter4R library the other day and realized that in order to make it to work on Mac OS X (Leopard) you need to also require ‘time’. Or you will get an error similar to</p>
