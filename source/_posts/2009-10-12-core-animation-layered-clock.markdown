@@ -181,6 +181,6 @@ Finally I subclassed `NSWindow` in order to turn off the window decoration and s
 
 I hope you find this helpful and please make sure to subscribe to my feed if you did. I'll do my best to answer any questions you might have in the comment section below.
 
-The full source as an Xcode project can be browsed at: [Github](http://github.com/m5h/glossyclock) or [downloaded](http://github.com/m5h/glossyclock/zipball/master).
+The full source as an Xcode project can be browsed at: [Github](http://github.com/mhallendal/glossyclock) or [downloaded](http://github.com/mhallendal/glossyclock/zipball/master).
 
 

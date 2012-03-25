@@ -44,4 +44,4 @@ To connect to Convore you first need to create an account through their website.
 
 There still is work that needs to be done to it so feel free to fork and hack on it. For example there is currently no way to cancel the listener.
 
-[The code at Github](https://github.com/m5h/mhconvore)
+[The code at Github](https://github.com/mhallendal/mhconvore)

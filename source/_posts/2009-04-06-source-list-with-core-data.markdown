@@ -115,7 +115,7 @@ I also added an action to my application delegate to create new *Item*s and make
 
 That's it! Now a regular `NSTreeController` can be used in entity mode by setting the entity to _Section_ as you would normally do.
 
-I hope you found it useful, if you did, make sure you share it with your friends and subscribe to my [RSS feed](http://blog.m5h.org/feed) or [follow me on twitter](http://twitter.com/m5h) for notifications about future posts.
+I hope you found it useful, if you did, make sure you share it with your friends and subscribe to my [RSS feed](http://simplyhacking.com/atom.xml) or [follow me on twitter](http://twitter.com/mhallendal) for notifications about future posts.
 
 I'd love to get feedback on better solutions, improvements or just comments on what you think.
 
