@@ -1,73 +1,73 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
-        <loc>http://mhallendal.github.com/using-twitter4r-on-mac-os-x.html</loc>
+        <loc>http://simplyhacking.com/using-twitter4r-on-mac-os-x.html</loc>
         <lastmod>2012-03-26T00:12:32+02:00</lastmod>
     </url>
     <url>
-        <loc>http://mhallendal.github.com/removing-a-remote-branch-in-git.html</loc>
+        <loc>http://simplyhacking.com/removing-a-remote-branch-in-git.html</loc>
         <lastmod>2012-03-26T00:12:32+02:00</lastmod>
     </url>
     <url>
-        <loc>http://mhallendal.github.com/nstreecontroller-wrapping-object.html</loc>
+        <loc>http://simplyhacking.com/nstreecontroller-wrapping-object.html</loc>
         <lastmod>2012-03-26T00:12:32+02:00</lastmod>
     </url>
     <url>
         <loc>
-            http://mhallendal.github.com/expanding-nsoutlineview-nodes-at-application-start.html
+            http://simplyhacking.com/expanding-nsoutlineview-nodes-at-application-start.html
         </loc>
         <lastmod>2012-03-26T00:12:32+02:00</lastmod>
     </url>
     <url>
-        <loc>http://mhallendal.github.com/source-list-with-core-data.html</loc>
+        <loc>http://simplyhacking.com/source-list-with-core-data.html</loc>
         <lastmod>2012-03-26T00:12:32+02:00</lastmod>
     </url>
     <url>
-        <loc>http://mhallendal.github.com/blog-at-github.html</loc>
+        <loc>http://simplyhacking.com/blog-at-github.html</loc>
         <lastmod>2012-03-26T00:12:32+02:00</lastmod>
     </url>
     <url>
-        <loc>http://mhallendal.github.com/cocoa-prototyping-with-webview.html</loc>
+        <loc>http://simplyhacking.com/cocoa-prototyping-with-webview.html</loc>
         <lastmod>2012-03-26T00:12:32+02:00</lastmod>
     </url>
     <url>
-        <loc>http://mhallendal.github.com/macruby-support-in-any-cocoa-application.html</loc>
+        <loc>http://simplyhacking.com/macruby-support-in-any-cocoa-application.html</loc>
         <lastmod>2012-03-26T00:12:32+02:00</lastmod>
     </url>
     <url>
-        <loc>http://mhallendal.github.com/reverse-array-in-objc.html</loc>
+        <loc>http://simplyhacking.com/reverse-array-in-objc.html</loc>
         <lastmod>2012-03-26T00:12:32+02:00</lastmod>
     </url>
     <url>
-        <loc>http://mhallendal.github.com/core-animation-layered-clock.html</loc>
-        <lastmod>2012-03-26T00:25:04+02:00</lastmod>
+        <loc>http://simplyhacking.com/core-animation-layered-clock.html</loc>
+        <lastmod>2012-03-26T00:29:11+02:00</lastmod>
     </url>
     <url>
-        <loc>http://mhallendal.github.com/spacedust-xcode-theme.html</loc>
+        <loc>http://simplyhacking.com/spacedust-xcode-theme.html</loc>
         <lastmod>2012-03-26T00:12:32+02:00</lastmod>
     </url>
     <url>
-        <loc>http://mhallendal.github.com/spacedust-xcode-theme-for-xcode-4.html</loc>
+        <loc>http://simplyhacking.com/spacedust-xcode-theme-for-xcode-4.html</loc>
         <lastmod>2012-03-26T00:12:32+02:00</lastmod>
     </url>
     <url>
-        <loc>http://mhallendal.github.com/debug-method-in-xcode.html</loc>
+        <loc>http://simplyhacking.com/debug-method-in-xcode.html</loc>
         <lastmod>2012-03-26T00:12:32+02:00</lastmod>
     </url>
     <url>
-        <loc>http://mhallendal.github.com/code-separation-using-blocks.html</loc>
+        <loc>http://simplyhacking.com/code-separation-using-blocks.html</loc>
         <lastmod>2012-03-26T00:12:32+02:00</lastmod>
     </url>
     <url>
-        <loc>http://mhallendal.github.com/mhconvore.html</loc>
+        <loc>http://simplyhacking.com/mhconvore.html</loc>
         <lastmod>2012-03-26T00:12:32+02:00</lastmod>
     </url>
     <url>
-        <loc>http://mhallendal.github.com/blog/archives/</loc>
-        <lastmod>2012-03-26T00:25:04+02:00</lastmod>
+        <loc>http://simplyhacking.com/blog/archives/</loc>
+        <lastmod>2012-03-26T00:29:11+02:00</lastmod>
     </url>
     <url>
-        <loc>http://mhallendal.github.com/</loc>
-        <lastmod>2012-03-26T00:25:04+02:00</lastmod>
+        <loc>http://simplyhacking.com/</loc>
+        <lastmod>2012-03-26T00:29:11+02:00</lastmod>
     </url>
 </urlset>
