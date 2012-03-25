@@ -1,113 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
 
-<!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
-<head>
-  <meta charset="utf-8">
-  <title>Simply Hacking</title>
-  <meta name="author" content="Mikael Hallendal">
-
-  
-  <meta name="description" content="Just pushed the first cut of a small framework to connect with the newly launched chatservice Convore. In short Convore is an attempt to create a &hellip;">
-  
-
-  <!-- http://t.co/dKP3o1e -->
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  
-  <link rel="canonical" href="http://simplyhacking.com/index.html">
-  <link href="/favicon.png" rel="icon">
-  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="/javascripts/ender.js"></script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <link href="/atom.xml" rel="alternate" title="Simply Hacking" type="application/atom+xml">
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-
-  
-  <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-755873-5']);
-    _gaq.push(['_trackPageview']);
-
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-  </script>
-
-
-</head>
-
-<body   >
-  <header role="banner"><hgroup>
-  <h1><a href="/">Simply Hacking</a></h1>
-  
-    <h2>Mac OS X and iOS Programming</h2>
-  
-</hgroup>
-
-</header>
-  <nav role="navigation"><ul class="subscription" data-subscription="rss">
-  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
-</ul>
-  
-<form action="http://google.com/search" method="get">
-  <fieldset role="search">
-    <input type="hidden" name="q" value="site:simplyhacking.com" />
-    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
-  </fieldset>
-</form>
-  
-<ul class="main-navigation">
-  <li><a href="/">Blog</a></li>
-  <li><a href="/blog/archives">Archives</a></li>
-</ul>
-
-</nav>
-  <div id="main">
-    <div id="content">
-      <div class="blog-index">
-  
-  
-  
-    <article>
-      
-  <header>
+  <title><![CDATA[Simply Hacking]]></title>
+  <link href="http://simplyhacking.com/atom.xml" rel="self"/>
+  <link href="http://simplyhacking.com/"/>
+  <updated>2012-03-26T00:13:25+02:00</updated>
+  <id>http://simplyhacking.com/</id>
+  <author>
+    <name><![CDATA[Mikael Hallendal]]></name>
     
-      <h1 class="entry-title"><a href="/mhconvore.html">Initial Release of MHConvore</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
 
   
-
-
-<time datetime="2011-02-16T00:00:00+01:00" pubdate data-updated="true">Feb 16<span>th</span>, 2011</time>
-        
-         | <a href="/mhconvore.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Just pushed the first cut of a small framework to connect with the newly launched chatservice <a href="http://convore.com/">Convore</a>. In short Convore is an attempt to create a better way to chat than IRC and also support a web frontend while making it possible to connect with native clients.</p>
+  <entry>
+    <title type="html"><![CDATA[Initial release of MHConvore]]></title>
+    <link href="http://simplyhacking.com/mhconvore.html"/>
+    <updated>2011-02-16T00:00:00+01:00</updated>
+    <id>http://simplyhacking.com/mhconvore</id>
+    <content type="html"><![CDATA[<p>Just pushed the first cut of a small framework to connect with the newly launched chatservice <a href="http://convore.com/">Convore</a>. In short Convore is an attempt to create a better way to chat than IRC and also support a web frontend while making it possible to connect with native clients.</p>
 
 <p>The API will likely change a bit and it&#8217;s fresh out of the editor so might be a bit flaky still.</p>
 
@@ -176,44 +87,15 @@
 <p>There still is work that needs to be done to it so feel free to fork and hack on it. For example there is currently no way to cancel the listener.</p>
 
 <p><a href="https://github.com/mhallendal/mhconvore">The code at Github</a></p>
-</div>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/code-separation-using-blocks.html">Code Separation Using Blocks</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-01-24T00:00:00+01:00" pubdate data-updated="true">Jan 24<span>th</span>, 2011</time>
-        
-         | <a href="/code-separation-using-blocks.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>This is a short blog entry to describe how you can use blocks to seperate a generic code from problem specific using blocks. Those that have been looking at <a href="http://projecteuler.net">Project Euler</a> might recognize this problem description.</p>
+  <entry>
+    <title type="html"><![CDATA[Code Separation Using Blocks]]></title>
+    <link href="http://simplyhacking.com/code-separation-using-blocks.html"/>
+    <updated>2011-01-24T00:00:00+01:00</updated>
+    <id>http://simplyhacking.com/code-separation-using-blocks</id>
+    <content type="html"><![CDATA[<p>This is a short blog entry to describe how you can use blocks to seperate a generic code from problem specific using blocks. Those that have been looking at <a href="http://projecteuler.net">Project Euler</a> might recognize this problem description.</p>
 
 <p>The program is supposed to calculate the sum of all even-valued <a href="http://en.wikipedia.org/wiki/Fibonacci_number">Fibonacci numbers</a> that doesn&#8217;t exceed a <tt>STOP_VALUE</tt>.</p>
 
@@ -252,44 +134,15 @@
 
 
 
-</div>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/debug-method-in-xcode.html">Debug Method in Xcode</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-08-18T00:00:00+02:00" pubdate data-updated="true">Aug 18<span>th</span>, 2010</time>
-        
-         | <a href="/debug-method-in-xcode.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I often find myself add a bunch of <tt>#ifdef</tt>s for code that I only want executed during the development but not in the shipped products. In order to make the code a bit easier to read I decided to make a small method that takes a C block (available in iOS 4.0 and Mac OS X 10.6) instead.</p>
+  <entry>
+    <title type="html"><![CDATA[Debug Method in Xcode]]></title>
+    <link href="http://simplyhacking.com/debug-method-in-xcode.html"/>
+    <updated>2010-08-18T00:00:00+02:00</updated>
+    <id>http://simplyhacking.com/debug-method-in-xcode</id>
+    <content type="html"><![CDATA[<p>I often find myself add a bunch of <tt>#ifdef</tt>s for code that I only want executed during the development but not in the shipped products. In order to make the code a bit easier to read I decided to make a small method that takes a C block (available in iOS 4.0 and Mac OS X 10.6) instead.</p>
 
 <p>You would use it like this:</p>
 
@@ -328,144 +181,57 @@
 
 <p>You can download <tt>debug.[ch]</tt> from <a href="http://gist.github.com/534487">GitHub</a> and simply add them to your project. You also need to edit your project settings for the Debug configuration to set the <tt>DEBUG</tt> macro.</p>
 
-<p><img src="/images/posts/project-settings-debug.png" alt="Project Settings Dialog" /></p>
+<p><img src="http://simplyhacking.com/images/posts/project-settings-debug.png" alt="Project Settings Dialog" /></p>
 
 <p><a href="http://gist.github.com/534487">http://gist.github.com/534487</a></p>
-</div>
+]]></content>
+  </entry>
   
-  
+  <entry>
+    <title type="html"><![CDATA[Spacedust Xcode Theme for Xcode 4]]></title>
+    <link href="http://simplyhacking.com/spacedust-xcode-theme-for-xcode-4.html"/>
+    <updated>2010-08-16T00:00:00+02:00</updated>
+    <id>http://simplyhacking.com/spacedust-xcode-theme-for-xcode-4</id>
+    <content type="html"><![CDATA[<p>Thanks to <a href="http://gist.github.com/488120">mrevils script</a> to convert Xcode 3 themes to Xcode 4 I updated my <a href="http://simplyhacking.com/spacedust-xcode-theme.html">Spacedust</a> theme to Xcode 4.</p>
 
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/spacedust-xcode-theme-for-xcode-4.html">Spacedust Xcode Theme for Xcode 4</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-08-16T00:00:00+02:00" pubdate data-updated="true">Aug 16<span>th</span>, 2010</time>
-        
-         | <a href="/spacedust-xcode-theme-for-xcode-4.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Thanks to <a href="http://gist.github.com/488120">mrevils script</a> to convert Xcode 3 themes to Xcode 4 I updated my <a href="http://simplyhacking.com/spacedust-xcode-theme.html">Spacedust</a> theme to Xcode 4.</p>
-
-<p><img src="/images/posts/spacedust-xcode-theme.png"/></p>
+<p><img src="http://simplyhacking.com/images/posts/spacedust-xcode-theme.png"/></p>
 
 <p>Download and installation instructions are available at in the link below.</p>
 
 <p><a href="http://gist.github.com/527103">http://gist.github.com/527103</a></p>
-</div>
+]]></content>
+  </entry>
   
-  
+  <entry>
+    <title type="html"><![CDATA[Spacedust Xcode Theme]]></title>
+    <link href="http://simplyhacking.com/spacedust-xcode-theme.html"/>
+    <updated>2010-01-30T00:00:00+01:00</updated>
+    <id>http://simplyhacking.com/spacedust-xcode-theme</id>
+    <content type="html"><![CDATA[<p>I decided it was time to create a new Xcode theme and created one that works well with dark backgrounds. It&#8217;s called <em>Spacedust</em> and should look good on most dark tints.</p>
 
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/spacedust-xcode-theme.html">Spacedust Xcode Theme</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-01-30T00:00:00+01:00" pubdate data-updated="true">Jan 30<span>th</span>, 2010</time>
-        
-         | <a href="/spacedust-xcode-theme.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I decided it was time to create a new Xcode theme and created one that works well with dark backgrounds. It&#8217;s called <em>Spacedust</em> and should look good on most dark tints.</p>
-
-<p><img src="/images/posts/spacedust-xcode-theme.png"/></p>
+<p><img src="http://simplyhacking.com/images/posts/spacedust-xcode-theme.png"/></p>
 
 <p>Feel free to grab it if you like it.</p>
 
-<p><a href="/files/Spacedust.xccolortheme.zip" onClick="javascript: pageTracker._trackPageview('/files/Spacedust.xccolortheme.zip');">Spacedust.xccolortheme.zip</a></p>
+<p><a href="http://simplyhacking.com/files/Spacedust.xccolortheme.zip" onClick="javascript: pageTracker._trackPageview('/files/Spacedust.xccolortheme.zip');">Spacedust.xccolortheme.zip</a></p>
 
 <p>To install it, simply unpack it and place <code>Spacedust.xccolortheme.zip</code> in:
 <code>~/Library/Application Support/Xcode/Color\ Themes</code>.</p>
-</div>
+]]></content>
+  </entry>
   
-  
+  <entry>
+    <title type="html"><![CDATA[Core Animation Layered Clock]]></title>
+    <link href="http://simplyhacking.com/core-animation-layered-clock.html"/>
+    <updated>2009-10-12T00:00:00+02:00</updated>
+    <id>http://simplyhacking.com/core-animation-layered-clock</id>
+    <content type="html"><![CDATA[<p>I wanted to get into Core Animation a bit over the weekend and decided to write a simple digital clock. With the help from <a href="http://rhult.github.com/">Richard</a> I set out to hack it up and figured it might be useful for others just starting out with Core Animation.</p>
 
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/core-animation-layered-clock.html">Core Animation Layered Clock</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-10-12T00:00:00+02:00" pubdate data-updated="true">Oct 12<span>th</span>, 2009</time>
-        
-         | <a href="/core-animation-layered-clock.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I wanted to get into Core Animation a bit over the weekend and decided to write a simple digital clock. With the help from <a href="http://rhult.github.com/">Richard</a> I set out to hack it up and figured it might be useful for others just starting out with Core Animation.</p>
-
-<p><img src="/images/posts/glossy-clock.png" alt="Resulting App" /></p>
+<p><img src="http://simplyhacking.com/images/posts/glossy-clock.png" alt="Resulting App" /></p>
 
 <p>After creating a normal Cocoa Application and setting up a custom view in Interface Builder it&#8217;s time to setup the layers that will make up the final interface. Make sure that you set the custom view to your class so that it is actually used:</p>
 
-<p><img src="/images/posts/glossy-clock-ib.png" alt="Info panel in Interface Builder" /></p>
+<p><img src="http://simplyhacking.com/images/posts/glossy-clock-ib.png" alt="Info panel in Interface Builder" /></p>
 
 <p>Layers in Core Animation are built up as a tree where the layer you set to your view with <code>setLayer:</code> is the root layer. All other layers are added as sublayers to the root layer or another layer with <code>addSublayer:</code>. In the code snippets below <code>backgroundLayer</code> is my root layer.</p>
 
@@ -752,87 +518,29 @@
 <p>I hope you find this helpful and please make sure to subscribe to my feed if you did. I&#8217;ll do my best to answer any questions you might have in the comment section below.</p>
 
 <p>The full source as an Xcode project can be browsed at: <a href="http://github.com/mhallendal/glossyclock">Github</a> or <a href="http://github.com/mhallendal/glossyclock/zipball/master">downloaded</a>.</p>
-</div>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/reverse-array-in-objc.html">Reversing an Array in Objective C</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-10-09T00:00:00+02:00" pubdate data-updated="true">Oct 9<span>th</span>, 2009</time>
-        
-         | <a href="/reverse-array-in-objc.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Was looking for the best way to reverse an array in Objective C and stumbled over this solution that might not be obvious to everyone (wasn&#8217;t to me at least).</p>
+  <entry>
+    <title type="html"><![CDATA[Reversing an array in Objective C]]></title>
+    <link href="http://simplyhacking.com/reverse-array-in-objc.html"/>
+    <updated>2009-10-09T00:00:00+02:00</updated>
+    <id>http://simplyhacking.com/reverse-array-in-objc</id>
+    <content type="html"><![CDATA[<p>Was looking for the best way to reverse an array in Objective C and stumbled over this solution that might not be obvious to everyone (wasn&#8217;t to me at least).</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">NSArray</span> <span class="o">*</span><span class="n">reversedArray</span> <span class="o">=</span> <span class="p">[[</span><span class="n">array</span> <span class="n">reverseObjectEnumerator</span><span class="p">]</span> <span class="n">allObjects</span><span class="p">];</span>
 </span></code></pre></td></tr></table></div></figure>
 
-</div>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/macruby-support-in-any-cocoa-application.html">Macruby Support in Any Cocoa Application</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-05-06T00:00:00+02:00" pubdate data-updated="true">May 6<span>th</span>, 2009</time>
-        
-         | <a href="/macruby-support-in-any-cocoa-application.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Yesterday I published a post about <a href="/cocoa-prototyping-with-webview.html">Cocoa Prototyping with Webview</a> and today I found out about <a href="http://www.macruby.org/">Macruby</a> thanks to <a href="http://twitter.com/sarnesjo">@sarnesjo</a>. Already looking for ways of prototyping in Cocoa it&#8217;s hard to not find Macruby very interesting.</p>
+  <entry>
+    <title type="html"><![CDATA[Macruby Support in any Cocoa Application]]></title>
+    <link href="http://simplyhacking.com/macruby-support-in-any-cocoa-application.html"/>
+    <updated>2009-05-06T00:00:00+02:00</updated>
+    <id>http://simplyhacking.com/macruby-support-in-any-cocoa-application</id>
+    <content type="html"><![CDATA[<p>Yesterday I published a post about <a href="http://simplyhacking.com/cocoa-prototyping-with-webview.html">Cocoa Prototyping with Webview</a> and today I found out about <a href="http://www.macruby.org/">Macruby</a> thanks to <a href="http://twitter.com/sarnesjo">@sarnesjo</a>. Already looking for ways of prototyping in Cocoa it&#8217;s hard to not find Macruby very interesting.</p>
 
 <p>Macruby turns out to be a very powerful tool for prototyping (as well as writing entire applications in) as it fits perfectly fine in a normal Objective-C code base. What I wanted was something like this:</p>
 
@@ -867,11 +575,11 @@
 
 <p>In order to link to the Macruby framework you need to use garbage collection in your project, if you aren&#8217;t already you enable it in the project inspector:</p>
 
-<p><img src="/images/posts/macruby-in-xcode-gc.png" alt="Set the project to use Garbage Collection" /></p>
+<p><img src="http://simplyhacking.com/images/posts/macruby-in-xcode-gc.png" alt="Set the project to use Garbage Collection" /></p>
 
 <p>Next you need to make your project link against the Macruby framework:</p>
 
-<p><img src="/images/posts/macruby-in-xcode-add-framework.png" alt="Add the Macruby framework" /></p>
+<p><img src="http://simplyhacking.com/images/posts/macruby-in-xcode-add-framework.png" alt="Add the Macruby framework" /></p>
 
 <p>That&#8217;s it for the project settings, let&#8217;s hook it up in the code. When you use the built-in project template for a Macruby project a small Ruby file called <em>rb_main.rb</em> is created for you. Since I&#8217;m using a generic Cocoa application template I needed to create this file and simply copied the file into my new project (its code below). It loads all Ruby files in your bundle and starts the Cocoa main loop.</p>
 
@@ -925,57 +633,28 @@
 
 <p>With these changes you can now start writing code in either Ruby or Objective-C within the same project. Here are the files I ended up with in my very small example.</p>
 
-<p><img src="/images/posts/macruby-in-xcode-files.png" alt="Example Files" /></p>
+<p><img src="http://simplyhacking.com/images/posts/macruby-in-xcode-files.png" alt="Example Files" /></p>
 
 <p>The final application simply shows a small window with a button:</p>
 
-<p><img src="/images/posts/macruby-in-xcode-example.png" alt="Example window" /></p>
+<p><img src="http://simplyhacking.com/images/posts/macruby-in-xcode-example.png" alt="Example window" /></p>
 
 <p>Make sure to watch the great <a href="http://pragmaticstudio.com/screencasts/6-macruby">introductionary screencast</a> then download the example project and get started tinkering.</p>
 
-<p><a href="/downloads/posts/ObjcMacRuby.tar.gz">Example project</a></p>
+<p><a href="http://simplyhacking.com/downloads/posts/ObjcMacRuby.tar.gz">Example project</a></p>
 
 <p>If you find this as cool and useful as I did, let me hear about it!</p>
 
 <p><strong>Edit:</strong> Be sure to read Laurents comment below for an alternative way of loading your Ruby files into your application.</p>
-</div>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/cocoa-prototyping-with-webview.html">Cocoa Prototyping With Webview</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-05-05T00:00:00+02:00" pubdate data-updated="true">May 5<span>th</span>, 2009</time>
-        
-         | <a href="/cocoa-prototyping-with-webview.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>While Interface Builder makes it really easy to quickly put together and test the overall design of your user interface it doesn&#8217;t help much when it comes to its overall flow. In any non-trivial application you are likely to have some custom views or view switching.</p>
+  <entry>
+    <title type="html"><![CDATA[Cocoa Prototyping with Webview]]></title>
+    <link href="http://simplyhacking.com/cocoa-prototyping-with-webview.html"/>
+    <updated>2009-05-05T00:00:00+02:00</updated>
+    <id>http://simplyhacking.com/cocoa-prototyping-with-webview</id>
+    <content type="html"><![CDATA[<p>While Interface Builder makes it really easy to quickly put together and test the overall design of your user interface it doesn&#8217;t help much when it comes to its overall flow. In any non-trivial application you are likely to have some custom views or view switching.</p>
 
 <p>For example, say that you want to try out whether it makes sense to use a source list in order to navigate the application and have your content view switch based on what you select in it.</p>
 
@@ -985,7 +664,7 @@
 
 <p>To give an idea of what it does, take a look at the following screenshot showing a basic prototype UI consisting of two suchs views embedded in a split view.</p>
 
-<p><img src="/images/posts/html-prototype-ui.png" alt="Prototyped UI, using PrototypeView" /></p>
+<p><img src="http://simplyhacking.com/images/posts/html-prototype-ui.png" alt="Prototyped UI, using PrototypeView" /></p>
 
 <p>Using the PrototypeView is easy.</p>
 
@@ -993,7 +672,7 @@
 
 <p>Using Interface Builder, create the UI you want and put custom views where you want to prototype using the <code>PrototypeView</code>.</p>
 
-<p><img src="/images/posts/html-prototype-ib.png" alt="Setting class to PrototypeView" /></p>
+<p><img src="http://simplyhacking.com/images/posts/html-prototype-ib.png" alt="Setting class to PrototypeView" /></p>
 
 <p>I used a class called <code>AppController</code> with two outlets to the prototype views by creating an <code>NSObject</code> subclass and set it up in Interface Builder by dragging an <code>NSObject</code> from the library and setting the class to <code>AppController</code> like above.</p>
 
@@ -1084,188 +763,365 @@
 
 <p>That&#8217;s it, happy prototyping!</p>
 
-<p>For a closer look you can see the <a href="http://gist.github.com/106856">PrototypeView source code</a> or download the example project I used as a <a href="/downloads/posts/HtmlPrototype.tar.gz">tarball</a>.</p>
+<p>For a closer look you can see the <a href="http://gist.github.com/106856">PrototypeView source code</a> or download the example project I used as a <a href="http://simplyhacking.com/downloads/posts/HtmlPrototype.tar.gz">tarball</a>.</p>
 
 <p>I&#8217;d love any feedback on how to improve this and possibly even supporting using JavaScript to communicate both ways with the HTML view in order to let the application update the views dynamically.</p>
-</div>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog-at-github.html">Blogging at Github and Simply Hacking</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-04-20T00:00:00+02:00" pubdate data-updated="true">Apr 20<span>th</span>, 2009</time>
-        
-         | <a href="/blog-at-github.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p class="meta">20 Apr 2009 &#8211; Stockholm</p>
+  <entry>
+    <title type="html"><![CDATA[Blogging at Github and Simply Hacking]]></title>
+    <link href="http://simplyhacking.com/blog-at-github.html"/>
+    <updated>2009-04-20T00:00:00+02:00</updated>
+    <id>http://simplyhacking.com/blog-at-github</id>
+    <content type="html"><![CDATA[<p class="meta">20 Apr 2009 &#8211; Stockholm</p>
 <p>Decided to move my blog to a simpler solution by using Github and the nice <a href="http://github.com/mojombo/jekyll">Jekyll</a> site generator by <a href="http://tom.preston-werner.com/">Tom Preston-Werner</a>.</p>
 <p>Still need to tweak the stylesheetes a bit to not be a total rip off from Toms (which he is kind enough to let others use) but I definitely like the clean design.</p>
-<p>Really looking forward to a simpler blog system where I don&#8217;t need to manage an <span class="caps">SQL</span> database and keep the software up to date. Comments are done through <a href="http://disqus.com">Disqus</a>.</p></div>
+<p>Really looking forward to a simpler blog system where I don&#8217;t need to manage an <span class="caps">SQL</span> database and keep the software up to date. Comments are done through <a href="http://disqus.com">Disqus</a>.</p>]]></content>
+  </entry>
   
+  <entry>
+    <title type="html"><![CDATA[Source List with Core Data]]></title>
+    <link href="http://simplyhacking.com/source-list-with-core-data.html"/>
+    <updated>2009-04-06T00:00:00+02:00</updated>
+    <id>http://simplyhacking.com/source-list-with-core-data</id>
+    <content type="html"><![CDATA[<p>Last week I decided to look into how to create a source list that is backed by Core Data with section headers created from code. New to Cocoa I set out to Google for a solution but surprisingly enough I didn&#8217;t find a lot about how to achieve this (or I simply googled for the wrong things). After a few days I managed to derive, what I believe, an elegant solution to this and figured it could be useful for others wanting to do this.</p>
+
+<p><img src="http://simplyhacking.com/images/posts/sl-cd-result.png" alt="The planned source list" /></p>
+
+<h2>Approaches</h2>
+
+<p>My first plan was to create some kind of layer in between Core Data and the NSTreeController but that quickly added a lot of complexity and code. The second solution was to create the headers and put them in Core Data the first time you start the application. While this was easily done it felt a bit hackish.</p>
+
+<p>After spending a couple of days with this, trying out various solutions and ideas me and <a href="http://twitter.com/rhult">Richard</a> discussed the topic, wondering if maybe Core Data had some builtin support for this.</p>
+
+<p>Twenty minutes and some fifty lines of code later I looked at the screen, amazed at how awesome Core Data is. This is what I ended up with, mind though that it&#8217;s not a full tutorial but only the crucial steps, you still need to know how to connect it all with the NSTreeController and NSOutlineView.</p>
+
+<h2>The Solution</h2>
+
+<p>The idea is to use two different persistent stores, the regular XML store and an in memory store for the code generated entites.</p>
+
+<p>For the purpose of this example the data model is very simple, two entities called <em>Section</em> (for the code generated section headers) and <em>Item</em> (for the entities that are read from Core Data).</p>
+
+<p><em>Section</em> will have a <code>name</code> attribute and a one-to-many relationship to <em>Item</em> called <code>children</code>. <em>Item</em> will have a <code>name</code> and a reverse to-one relationship back to <em>Section</em> called <code>section</code>. Make sure you <strong>make this relationship transient</strong> to tell Core Data that this relationship only exists runtime and should not be stored.</p>
+
+<p><img src="http://simplyhacking.com/images/posts/sl-cd-datamodel1.png" alt="The data model" /></p>
+
+<p>The <em>NSTreeController</em> has a property called <code>childrenKeyPath</code> that defines the key path to retrieve an array of children from each of the nodes in the tree. All nodes displayed in the tree need to respond to this key path. Since <em>Item</em>s don&#8217;t have children it is not included in the data model (though you could have added it in the model designer but in my opinion isn&#8217;t as nice), I will instead create a subclass of <em>NSManagedObject</em> to represent an <em>Item</em>.</p>
+
+<p>Select the <em>Item</em> entity in the model designer and create a new file (File->New File and choose Managed Object Class from the Cocoa section). Simply name it Item.m (and check the <em>Also create &#8220;Item.h&#8221;</em>) box. Add a method <code>children</code> to your <em>Item</em> class.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cm">/* In Item.h */</span>
+</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="n">children</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="cm">/* In Item.m */</span>
+</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="n">children</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nb">nil</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This method will be called by the NSTreeController when it is populating the tree and since an <em>Item</em> doesn&#8217;t have any children it should return <code>nil</code>.</p>
+
+<p>That&#8217;s it for the model, time to setup the stores.</p>
+
+<p>I extended the method <code>persistentStoreCoordinator</code> in the auto generated application delegate to create a second store with the URL <em>memory://store</em>. This store should be of the type <code>NSInMemoryStoreType</code> which means that any entity tied to it won&#8217;t be saved to disk.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">url</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSURL</span> <span class="nl">URLWithString:</span><span class="s">@&quot;memory://store&quot;</span><span class="p">];</span>
+</span><span class='line'><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">[</span><span class="n">persistentStoreCoordinator</span> <span class="nl">addPersistentStoreWithType:</span><span class="n">NSInMemoryStoreType</span>
+</span><span class='line'>                                              <span class="nl">configuration:</span><span class="nb">nil</span>
+</span><span class='line'>                                                        <span class="nl">URL:</span><span class="n">url</span>
+</span><span class='line'>                                                    <span class="nl">options:</span><span class="nb">nil</span>
+</span><span class='line'>                                                      <span class="nl">error:</span><span class="o">&amp;</span><span class="n">error</span><span class="p">])</span> <span class="p">{</span>
+</span><span class='line'>    <span class="p">[[</span><span class="n">NSApplication</span> <span class="n">sharedApplication</span><span class="p">]</span> <span class="nl">presentError:</span><span class="n">error</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Both of these stores act in the same context so the layers on top of Core Data won&#8217;t know the difference between entites in one store or another.</p>
+
+<p>With the store in place the <em>Section</em> entities are created when the application is started, I added the code to the application delegate init method. After I create the <em>Section</em> I populate it with the result of fetching all my <em>Item</em> entities from Core Data (lines 30-33 below).</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">-</span> <span class="p">(</span><span class="n">NSArray</span> <span class="o">*</span><span class="p">)</span><span class="nl">fetchAllWithEntity:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="n">entity</span>
+</span><span class='line'>                          <span class="nl">error:</span><span class="p">(</span><span class="n">NSError</span> <span class="o">**</span><span class="p">)</span><span class="n">error</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="n">NSFetchRequest</span> <span class="o">*</span><span class="n">request</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">NSEntityDescription</span> <span class="o">*</span><span class="n">desc</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">desc</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSEntityDescription</span> <span class="nl">entityForName:</span><span class="n">entity</span>
+</span><span class='line'>                       <span class="nl">inManagedObjectContext:</span><span class="p">[</span><span class="n">self</span> <span class="n">managedObjectContext</span><span class="p">]];</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">request</span> <span class="o">=</span> <span class="p">[[[</span><span class="n">NSFetchRequest</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">]</span> <span class="n">autorelease</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">request</span> <span class="nl">setEntity:</span><span class="n">desc</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="p">[[</span><span class="n">self</span> <span class="n">managedObjectContext</span><span class="p">]</span> <span class="nl">executeFetchRequest:</span><span class="n">request</span> <span class="nl">error:</span><span class="n">error</span><span class="p">];</span> 
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="n">init</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">super</span> <span class="n">init</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">NSError</span> <span class="o">*</span><span class="n">error</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">NSURL</span> <span class="o">*</span><span class="n">url</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSURL</span> <span class="nl">URLWithString:</span><span class="s">@&quot;memory://store&quot;</span><span class="p">];</span>
+</span><span class='line'>    <span class="kt">id</span> <span class="n">memoryStore</span> <span class="o">=</span> <span class="p">[[</span><span class="n">self</span> <span class="n">persistentStoreCoordinator</span><span class="p">]</span> <span class="nl">persistentStoreForURL:</span><span class="n">url</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">section</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSEntityDescription</span> <span class="nl">insertNewObjectForEntityForName:</span><span class="s">@&quot;Section&quot;</span>
+</span><span class='line'>                                             <span class="nl">inManagedObjectContext:</span><span class="p">[</span><span class="n">self</span> <span class="n">managedObjectContext</span><span class="p">]]</span> <span class="n">retain</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">section</span> <span class="nl">setValue:</span><span class="s">@&quot;My section&quot;</span> <span class="nl">forKey:</span><span class="s">@&quot;name&quot;</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">[[</span><span class="n">self</span> <span class="n">managedObjectContext</span><span class="p">]</span> <span class="nl">assignObject:</span><span class="n">section</span>
+</span><span class='line'>                            <span class="nl">toPersistentStore:</span><span class="n">memoryStore</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">NSArray</span> <span class="o">*</span><span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span> <span class="nl">fetchAllWithEntity:</span><span class="s">@&quot;Item&quot;</span> <span class="nl">error:</span><span class="o">&amp;</span><span class="n">error</span><span class="p">];</span>
+</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="kt">id</span> <span class="n">item</span> <span class="k">in</span> <span class="n">items</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="p">[</span><span class="n">item</span> <span class="nl">setValue:</span><span class="n">section</span> <span class="nl">forKey:</span><span class="s">@&quot;section&quot;</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">self</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Here the message <code>assignObject:toPersistentStore:</code> is sent to the <code>NSManagedObjectContext</code> to put the newly created <em>Section</em> in the in memory store so that it is not saved to disk with the <em>Item</em>s.</p>
+
+<p>I also added an action to my application delegate to create new <em>Item</em>s and make them children to the <em>Section</em>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nl">addItem:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="n">sender</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="kt">id</span> <span class="n">newObject</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSEntityDescription</span> <span class="nl">insertNewObjectForEntityForName:</span><span class="s">@&quot;Item&quot;</span>
+</span><span class='line'>                                                 <span class="nl">inManagedObjectContext:</span><span class="p">[</span><span class="n">self</span> <span class="n">managedObjectContext</span><span class="p">]];</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">newObject</span> <span class="nl">setValue:</span><span class="n">section</span> <span class="nl">forKey:</span><span class="s">@&quot;section&quot;</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That&#8217;s it! Now a regular <code>NSTreeController</code> can be used in entity mode by setting the entity to <em>Section</em> as you would normally do.</p>
+
+<p>I hope you found it useful, if you did, make sure you share it with your friends and subscribe to my <a href="http://simplyhacking.com/atom.xml">RSS feed</a> or <a href="http://twitter.com/mhallendal">follow me on twitter</a> for notifications about future posts.</p>
+
+<p>I&#8217;d love to get feedback on better solutions, improvements or just comments on what you think.</p>
+]]></content>
+  </entry>
   
+  <entry>
+    <title type="html"><![CDATA[Expanding NSOutlineView nodes at application start]]></title>
+    <link href="http://simplyhacking.com/expanding-nsoutlineview-nodes-at-application-start.html"/>
+    <updated>2009-04-06T00:00:00+02:00</updated>
+    <id>http://simplyhacking.com/expanding-nsoutlineview-nodes-at-application-start</id>
+    <content type="html"><![CDATA[<p>A problem when you want to expand some items in an <em>NSOutlineView</em> programatically at application start is that the <em>NSTreeController</em> prepares it&#8217;s content after <code>awakeFromNib</code> is called on your controller.</p>
 
+<p>To ensure that the data is loaded before you try to expand the items you can observe the <code>content</code> key on the tree controller and expand the nodes as you receive the the <code>observeValueForKeyPath:</code> message as shown below:</p>
 
-    </article>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nl">observeValueForKeyPath:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="n">keyPath</span>
+</span><span class='line'>                      <span class="nl">ofObject:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="n">object</span>
+</span><span class='line'>                        <span class="nl">change:</span><span class="p">(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="n">change</span>
+</span><span class='line'>                       <span class="nl">context:</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="n">context</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">object</span> <span class="o">==</span> <span class="n">treeController</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="c1">// Expand the first row (which is our section header)</span>
+</span><span class='line'>        <span class="p">[</span><span class="n">sourceList</span> <span class="nl">expandItem:</span><span class="p">[</span><span class="n">sourceList</span> <span class="nl">itemAtRow:</span><span class="mi">0</span><span class="p">]</span>
+</span><span class='line'>                <span class="nl">expandChildren:</span><span class="n">NO</span><span class="p">];</span>
+</span><span class='line'>        <span class="p">[</span><span class="n">treeController</span> <span class="nl">removeObserver:</span><span class="n">self</span>
+</span><span class='line'>                            <span class="nl">forKeyPath:</span><span class="s">@&quot;content&quot;</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">awakeFromNib</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="c1">// Listen on the treeController to expand the root node </span>
+</span><span class='line'>    <span class="c1">// when it has prepared it&#39;s content.</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">treeController</span> <span class="nl">addObserver:</span><span class="n">self</span>
+</span><span class='line'>                     <span class="nl">forKeyPath:</span><span class="s">@&quot;content&quot;</span>
+</span><span class='line'>                        <span class="nl">options:</span><span class="mi">0</span>
+</span><span class='line'>                        <span class="nl">context:</span><span class="nb">nil</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
-  <div class="pagination">
-    
-      <a class="prev" href="/blog/page/2/">&larr; Older</a>
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
-</div>
-<aside class="sidebar">
+  <entry>
+    <title type="html"><![CDATA[Retrieving the real object when using NSOutlineView with an NSTreeController]]></title>
+    <link href="http://simplyhacking.com/nstreecontroller-wrapping-object.html"/>
+    <updated>2009-04-04T00:00:00+02:00</updated>
+    <id>http://simplyhacking.com/nstreecontroller-wrapping-object</id>
+    <content type="html"><![CDATA[<p>As I just started out with Cocoa and started looking into the NSTreeController and NSOutlineView I realized that the objects seen by the outline view isn&#8217;t the same as the ones you see when working with the tree controller.</p>
+
+<p>The NSTreeController wraps your objects into another object and it took me some digging before I realized that you need to call <code>representedObject</code> to fetch the <em>real</em> object.</p>
+
+<p>Example from implementing an NSOutlineView delegate:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cm">/* NSOutlineView Delegate Method */</span>
+</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nl">outlineView:</span><span class="p">(</span><span class="n">NSOutlineView</span> <span class="o">*</span><span class="p">)</span><span class="n">view</span>
+</span><span class='line'>        <span class="nl">isGroupItem:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="n">item</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">([</span><span class="n">item</span> <span class="n">representedObject</span><span class="p">]</span> <span class="o">==</span> <span class="n">section</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">YES</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">NO</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
-    <section>
-  <h1>Recent Posts</h1>
-  <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/mhconvore.html">Initial release of MHConvore</a>
-      </li>
-    
-      <li class="post">
-        <a href="/code-separation-using-blocks.html">Code Separation Using Blocks</a>
-      </li>
-    
-      <li class="post">
-        <a href="/debug-method-in-xcode.html">Debug Method in Xcode</a>
-      </li>
-    
-      <li class="post">
-        <a href="/spacedust-xcode-theme-for-xcode-4.html">Spacedust Xcode Theme for Xcode 4</a>
-      </li>
-    
-      <li class="post">
-        <a href="/spacedust-xcode-theme.html">Spacedust Xcode Theme</a>
-      </li>
-    
-  </ul>
-</section>
+  <entry>
+    <title type="html"><![CDATA[Removing a remote branch in Git]]></title>
+    <link href="http://simplyhacking.com/removing-a-remote-branch-in-git.html"/>
+    <updated>2008-06-21T00:00:00+02:00</updated>
+    <id>http://simplyhacking.com/removing-a-remote-branch-in-git</id>
+    <content type="html"><![CDATA[<p><strong>This is a repost from my old blog</strong></p>
 
-<section>
-  <h1>GitHub Repos</h1>
-  <ul id="gh_repos">
-    <li class="loading">Status updating&#8230;</li>
-  </ul>
+<p>This is something I’ve had to checkup a few times so I figured it would be useful both for myself and for others to keep around in a blog post.</p>
+
+<p>To remove a remote branch you created in Git just push to it like:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git push origin :name-of-branch
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
-  <a href="https://github.com/mhallendal">@mhallendal</a> on GitHub
+  <entry>
+    <title type="html"><![CDATA[Using Twitter4R on Mac OS X]]></title>
+    <link href="http://simplyhacking.com/using-twitter4r-on-mac-os-x.html"/>
+    <updated>2008-05-31T00:00:00+02:00</updated>
+    <id>http://simplyhacking.com/using-twitter4r-on-mac-os-x</id>
+    <content type="html"><![CDATA[<p><strong>This is a repost from my old blog</strong></p>
+
+<p>Was playing around a bit with the Twitter4R library the other day and realized that in order to make it to work on Mac OS X (Leopard) you need to also require ‘time’. Or you will get an error similar to</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>lib/twitter/model.rb:268:in <span class="sb">`</span>initâ: undefined method <span class="sb">`</span>parseâ <span class="k">for </span>Time:Class <span class="o">(</span>NoMethodError<span class="o">)</span>.
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A small snippet to display my public tweets:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;rubygems&#39;</span>
+</span><span class='line'><span class="n">gem</span><span class="p">(</span><span class="s1">&#39;twitter4r&#39;</span><span class="p">,</span> <span class="s1">&#39;0.3.0&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;twitter&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># Required on Mac OS X Leopard</span>
+</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;time&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">twitter</span> <span class="o">=</span> <span class="no">Twitter</span><span class="o">::</span><span class="no">Client</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">m5h_timeline</span> <span class="o">=</span> <span class="n">twitter</span><span class="o">.</span><span class="n">timeline_for</span><span class="p">(</span><span class="ss">:user</span><span class="p">,</span> <span class="ss">:id</span> <span class="o">=&gt;</span> <span class="s1">&#39;m5h&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">m5h_timeline</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">status</span><span class="o">|</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="n">status</span><span class="o">.</span><span class="n">text</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
-  <script type="text/javascript">
-    $.domReady(function(){
-        if (!window.jXHR){
-            var jxhr = document.createElement('script');
-            jxhr.type = 'text/javascript';
-            jxhr.src = '/javascripts/libs/jXHR.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(jxhr, s);
-        }
-
-        github.showRepos({
-            user: 'mhallendal',
-            count: 5,
-            skip_forks: true,
-            target: '#gh_repos'
-        });
-    });
-  </script>
-  <script src="/javascripts/github.js" type="text/javascript"> </script>
-</section>
-
-
-<section>
-  <h1>Latest Tweets</h1>
-  <ul id="tweets">
-    <li class="loading">Status updating&#8230;</li>
-  </ul>
-  <script type="text/javascript">
-    $.domReady(function(){
-      getTwitterFeed("mhallendal", 4, false);
-    });
-  </script>
-  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
-  
-    <a href="http://twitter.com/mhallendal" class="twitter-follow-button" data-show-count="false">Follow @mhallendal</a>
-  
-</section>
-
-
-
-
-
-  
-</aside>
-
-    </div>
-  </div>
-  <footer role="contentinfo"><p>
-  Copyright &copy; 2012 - Mikael Hallendal -
-  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
-</p>
-
-</footer>
-  
-
-<script type="text/javascript">
-      var disqus_shortname = 'simplyhacking';
-      
-        
-        var disqus_script = 'count.js';
-      
-    (function () {
-      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    }());
-</script>
-
-
-
-
-
-
-
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
-
-
-
-
-
-</body>
-</html>
+</feed>

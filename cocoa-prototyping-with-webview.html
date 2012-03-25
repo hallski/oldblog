@@ -1,0 +1,405 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Cocoa Prototyping with Webview - Simply Hacking</title>
+  <meta name="author" content="Mikael Hallendal">
+
+  
+  <meta name="description" content="While Interface Builder makes it really easy to quickly put together and test the overall design of your user interface it doesn&#8217;t help much &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://simplyhacking.com/cocoa-prototyping-with-webview.html">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Simply Hacking" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-755873-5']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Simply Hacking</a></h1>
+  
+    <h2>Mac OS X and iOS Programming</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:simplyhacking.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Cocoa Prototyping With Webview</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-05-05T00:00:00+02:00" pubdate data-updated="true">May 5<span>th</span>, 2009</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>While Interface Builder makes it really easy to quickly put together and test the overall design of your user interface it doesn&#8217;t help much when it comes to its overall flow. In any non-trivial application you are likely to have some custom views or view switching.</p>
+
+<p>For example, say that you want to try out whether it makes sense to use a source list in order to navigate the application and have your content view switch based on what you select in it.</p>
+
+<p>Wouldn&#8217;t it be great if you could try this without having to implement all the code necessary to display and navigate the source list and other views. Using HTML for prototyping can be a powerful, quick and easy solution that is easily available to Cocoa developers.</p>
+
+<p>In order to make it even easier I created a <code>WebView</code> subclass called <code>PrototypeView</code> that displays a piece of HTML and sends a message to its <em>delegate</em> when the user clicks a link.</p>
+
+<p>To give an idea of what it does, take a look at the following screenshot showing a basic prototype UI consisting of two suchs views embedded in a split view.</p>
+
+<p><img src="/images/posts/html-prototype-ui.png" alt="Prototyped UI, using PrototypeView" /></p>
+
+<p>Using the PrototypeView is easy.</p>
+
+<h2>Step 1: Mock up the UI in Interface Builder</h2>
+
+<p>Using Interface Builder, create the UI you want and put custom views where you want to prototype using the <code>PrototypeView</code>.</p>
+
+<p><img src="/images/posts/html-prototype-ib.png" alt="Setting class to PrototypeView" /></p>
+
+<p>I used a class called <code>AppController</code> with two outlets to the prototype views by creating an <code>NSObject</code> subclass and set it up in Interface Builder by dragging an <code>NSObject</code> from the library and setting the class to <code>AppController</code> like above.</p>
+
+<h2>Step 2: Hooking the view up in the AppController</h2>
+
+<p>Back in XCode I create a subclass of NSObject called AppController and setup the two prototype views in its <code>awakeFromNib</code> by using the two method calls <code>setPrototypeDelegate</code> and <code>loadBundleFile</code>. In my example I used two prototype views called <code>sidebarView</code> and <code>contentView</code> and will use the AppController as my delegate.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">awakeFromNib</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">sideBarView</span> <span class="nl">setPrototypeDelegate:</span><span class="n">self</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">sideBarView</span> <span class="nl">loadBundleFile:</span><span class="s">@&quot;sidebar&quot;</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="p">[</span><span class="n">contentView</span> <span class="nl">setPrototypeDelegate:</span><span class="n">self</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">contentView</span> <span class="nl">loadBundleFile:</span><span class="s">@&quot;content1&quot;</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Step 3: Prototype in HTML</h2>
+
+<p>Starting the application at this point will cause it to load the files <em>sidebar.html</em> and <em>content1.html</em> and display them. Now that the files are being loaded you can implement the prototyped UI portions in the HTML files. Here is the content of <em>sidebar.html</em>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;html&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;head&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href=</span><span class="s">&quot;sidebar.css&quot;</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/head&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;body&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;ul&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;li&gt;&lt;p</span> <span class="na">class=</span><span class="s">&quot;header&quot;</span><span class="nt">&gt;</span>LIBRARY<span class="nt">&lt;/p&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;ul&gt;</span>
+</span><span class='line'>          <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">&quot;method:showViewOne&quot;</span><span class="nt">&gt;</span>Initial View<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+</span><span class='line'>          <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">&quot;method:showViewTwo&quot;</span><span class="nt">&gt;</span>Second View<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;/ul&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;/li&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/ul&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/body&gt;</span>
+</span><span class='line'><span class="nt">&lt;/html&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Step 4: Adding the methods in AppController</h2>
+
+<p>Notice the special links to <code>method:showViewOne</code>, clicking this will make the <code>PrototypeView</code> look if its delegate responds to <code>showViewOne</code> and send the message to it if it does.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">showViewOne</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">contentView</span> <span class="nl">loadBundleFile:</span><span class="s">@&quot;content1&quot;</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">showViewTwo</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">contentView</span> <span class="nl">loadBundleFile:</span><span class="s">@&quot;content2&quot;</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That&#8217;s it, happy prototyping!</p>
+
+<p>For a closer look you can see the <a href="http://gist.github.com/106856">PrototypeView source code</a> or download the example project I used as a <a href="/downloads/posts/HtmlPrototype.tar.gz">tarball</a>.</p>
+
+<p>I&#8217;d love any feedback on how to improve this and possibly even supporting using JavaScript to communicate both ways with the HTML view in order to let the application update the views dynamically.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Mikael Hallendal</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-05-05T00:00:00+02:00" pubdate data-updated="true">May 5<span>th</span>, 2009</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://simplyhacking.com/cocoa-prototyping-with-webview.html" data-via="mhallendal" data-counturl="http://simplyhacking.com/cocoa-prototyping-with-webview.html" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog-at-github.html" title="Previous Post: Blogging at Github and Simply Hacking">&laquo; Blogging at Github and Simply Hacking</a>
+      
+      
+        <a class="basic-alignment right" href="/macruby-support-in-any-cocoa-application.html" title="Next Post: Macruby Support in any Cocoa Application">Macruby Support in any Cocoa Application &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/mhconvore.html">Initial release of MHConvore</a>
+      </li>
+    
+      <li class="post">
+        <a href="/code-separation-using-blocks.html">Code Separation Using Blocks</a>
+      </li>
+    
+      <li class="post">
+        <a href="/debug-method-in-xcode.html">Debug Method in Xcode</a>
+      </li>
+    
+      <li class="post">
+        <a href="/spacedust-xcode-theme-for-xcode-4.html">Spacedust Xcode Theme for Xcode 4</a>
+      </li>
+    
+      <li class="post">
+        <a href="/spacedust-xcode-theme.html">Spacedust Xcode Theme</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/mhallendal">@mhallendal</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'mhallendal',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("mhallendal", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/mhallendal" class="twitter-follow-button" data-show-count="false">Follow @mhallendal</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - Mikael Hallendal -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'simplyhacking';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://simplyhacking.com/cocoa-prototyping-with-webview.html';
+        var disqus_url = 'http://simplyhacking.com/cocoa-prototyping-with-webview.html';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

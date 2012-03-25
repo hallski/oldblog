@@ -1,0 +1,586 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Core Animation Layered Clock - Simply Hacking</title>
+  <meta name="author" content="Mikael Hallendal">
+
+  
+  <meta name="description" content="I wanted to get into Core Animation a bit over the weekend and decided to write a simple digital clock. With the help from Richard I set out to hack &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://simplyhacking.com/core-animation-layered-clock.html">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Simply Hacking" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-755873-5']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Simply Hacking</a></h1>
+  
+    <h2>Mac OS X and iOS Programming</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:simplyhacking.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Core Animation Layered Clock</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-10-12T00:00:00+02:00" pubdate data-updated="true">Oct 12<span>th</span>, 2009</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>I wanted to get into Core Animation a bit over the weekend and decided to write a simple digital clock. With the help from <a href="http://rhult.github.com/">Richard</a> I set out to hack it up and figured it might be useful for others just starting out with Core Animation.</p>
+
+<p><img src="/images/posts/glossy-clock.png" alt="Resulting App" /></p>
+
+<p>After creating a normal Cocoa Application and setting up a custom view in Interface Builder it&#8217;s time to setup the layers that will make up the final interface. Make sure that you set the custom view to your class so that it is actually used:</p>
+
+<p><img src="/images/posts/glossy-clock-ib.png" alt="Info panel in Interface Builder" /></p>
+
+<p>Layers in Core Animation are built up as a tree where the layer you set to your view with <code>setLayer:</code> is the root layer. All other layers are added as sublayers to the root layer or another layer with <code>addSublayer:</code>. In the code snippets below <code>backgroundLayer</code> is my root layer.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">-</span> <span class="p">(</span><span class="n">CALayer</span> <span class="o">*</span><span class="p">)</span><span class="n">setupLayers</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="n">backgroundLayer</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span> <span class="n">setupBackgroundLayer</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="p">[</span><span class="n">backgroundLayer</span> <span class="nl">addSublayer:</span><span class="p">[</span><span class="n">self</span> <span class="n">setupClockFaceLayer</span><span class="p">]];</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">backgroundLayer</span> <span class="nl">addSublayer:</span><span class="p">[</span><span class="n">self</span> <span class="n">setupBorderLayer</span><span class="p">]];</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">backgroundLayer</span> <span class="nl">addSublayer:</span><span class="p">[</span><span class="n">self</span> <span class="n">setupGlossLayer</span><span class="p">]];</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">backgroundLayer</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nl">initWithFrame:</span><span class="p">(</span><span class="n">NSRect</span><span class="p">)</span><span class="n">frame</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="n">self</span> <span class="o">=</span> <span class="p">[</span><span class="n">super</span> <span class="nl">initWithFrame:</span><span class="n">frame</span><span class="p">];</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">clockTimer</span> <span class="o">=</span> <span class="p">[[</span><span class="n">ClockTimer</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="p">[</span><span class="n">self</span> <span class="nl">setLayer:</span><span class="p">[</span><span class="n">self</span> <span class="n">setupLayers</span><span class="p">]];</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">self</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">awakeFromNib</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">self</span> <span class="nl">setWantsLayer:</span><span class="n">YES</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>ClockTimer</code> is a simple class that updates the string displaying the time once a second. This string is available through the property <code>outputString</code> on the <code>ClockTimer</code> object.</p>
+
+<p>As you can see the clock is built up from four different layers: The background layer, a clock face layer, a border layer and finally a gloss layer adding the nice shine.</p>
+
+<h2>The Background Layer:</h2>
+
+<p>The background layer is created as a <code>CAGradientLayer</code> to give the clock background the nice blue gradient. This layer type was added in 10.6 so it won&#8217;t work on earlier versions of Mac OS X but should be fairly straight forward to do manually.</p>
+
+<p>In order to help with positioning of layers Core Animation comes with the notion of Layout Managers which can be added to a layer in order to layout its sublayers. The CAConstraintLayoutManager lets us set constraints on the layers sublayers in order to control how they are positioned. In this case the constraints will be set on the clock face to make it centered on the background.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">-</span> <span class="p">(</span><span class="n">CALayer</span> <span class="o">*</span><span class="p">)</span><span class="n">setupBackgroundLayer</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="n">backgroundLayer</span> <span class="o">=</span> <span class="p">[</span><span class="n">CAGradientLayer</span> <span class="n">layer</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">CGColorRef</span> <span class="n">gradientColor1</span> <span class="o">=</span> <span class="n">CGColorCreateGenericRGB</span><span class="p">(</span><span class="mf">13.0f</span> <span class="o">/</span> <span class="mf">255.0</span><span class="p">,</span> <span class="mf">116.0f</span> <span class="o">/</span> <span class="mf">255.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0f</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">CGColorRef</span> <span class="n">gradientColor2</span> <span class="o">=</span> <span class="n">CGColorCreateGenericRGB</span><span class="p">(</span><span class="mf">0.0f</span><span class="p">,</span> <span class="mf">53.0f</span><span class="o">/</span><span class="mf">255.0f</span><span class="p">,</span> <span class="mf">126.0f</span><span class="o">/</span><span class="mf">255.0f</span><span class="p">,</span> <span class="mf">1.0f</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">NSArray</span> <span class="o">*</span><span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSArray</span> <span class="nl">arrayWithObjects:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="n">gradientColor1</span><span class="p">,</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="n">gradientColor2</span><span class="p">,</span> <span class="nb">nil</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">CFRelease</span><span class="p">(</span><span class="n">gradientColor1</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">CFRelease</span><span class="p">(</span><span class="n">gradientColor2</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="p">[(</span><span class="n">CAGradientLayer</span> <span class="o">*</span><span class="p">)</span><span class="n">backgroundLayer</span> <span class="nl">setColors:</span><span class="n">colors</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">backgroundLayer</span> <span class="nl">setCornerRadius:</span><span class="mf">12.0f</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">CAConstraintLayoutManager</span> <span class="o">*</span><span class="n">layout</span> <span class="o">=</span> <span class="p">[</span><span class="n">CAConstraintLayoutManager</span> <span class="n">layoutManager</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">backgroundLayer</span> <span class="nl">setLayoutManager:</span><span class="n">layout</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">backgroundLayer</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>The ClockFace Layer:</h2>
+
+<p>Core Animation comes with several layer types to help us with various tasks. One of these is the <code>CATextLayer</code> which like the name suggests, make it really easy to output text. It also makes it really easy to customize how the text is displayed by setting font and font size. Using the normal shadow properties from <code>CALayer</code> you can add a nice drop shadow on the text.</p>
+
+<p>Using Cocoa bindings I connect the text layers <code>string</code> property with the <code>outputString</code> on my <code>ClockTimer</code>. This way the layer will automatically redraw itself everytime the timer updates the output string.</p>
+
+<p>This is also where we setup the constraints mentioned above to make sure that the text is centered in relation to its super layer (in this case the background).</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">-</span> <span class="p">(</span><span class="n">CALayer</span> <span class="o">*</span><span class="p">)</span><span class="n">setupClockFaceLayer</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">CATextLayer</span> <span class="o">*</span><span class="n">clockFaceLayer</span> <span class="o">=</span> <span class="p">[</span><span class="n">CATextLayer</span> <span class="n">layer</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">clockFaceLayer</span> <span class="nl">bind:</span><span class="s">@&quot;string&quot;</span> <span class="nl">toObject:</span><span class="n">clockTimer</span> <span class="nl">withKeyPath:</span><span class="s">@&quot;outputString&quot;</span> <span class="nl">options:</span><span class="nb">nil</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">clockFaceLayer</span> <span class="nl">setFont:</span><span class="s">@&quot;Menlo&quot;</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">clockFaceLayer</span> <span class="nl">setFontSize:</span><span class="mf">60.0f</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">clockFaceLayer</span> <span class="nl">setShadowOpacity:</span><span class="mf">.9f</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Constrain the text layer in the middle</span>
+</span><span class='line'>    <span class="n">CAConstraint</span> <span class="o">*</span><span class="n">constraint</span> <span class="o">=</span> <span class="p">[</span><span class="n">CAConstraint</span> <span class="nl">constraintWithAttribute:</span><span class="n">kCAConstraintMidX</span>
+</span><span class='line'>                                                          <span class="nl">relativeTo:</span><span class="s">@&quot;superlayer&quot;</span>
+</span><span class='line'>                                                           <span class="nl">attribute:</span><span class="n">kCAConstraintMidX</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">clockFaceLayer</span> <span class="nl">addConstraint:</span><span class="n">constraint</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">constraint</span> <span class="o">=</span> <span class="p">[</span><span class="n">CAConstraint</span> <span class="nl">constraintWithAttribute:</span><span class="n">kCAConstraintMidY</span>
+</span><span class='line'>                                            <span class="nl">relativeTo:</span><span class="s">@&quot;superlayer&quot;</span>
+</span><span class='line'>                                             <span class="nl">attribute:</span><span class="n">kCAConstraintMidY</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">clockFaceLayer</span> <span class="nl">addConstraint:</span><span class="n">constraint</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">clockFaceLayer</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>The Border Layer:</h2>
+
+<p>There are likely other ways of doing this but by using a separate layer I can use built in functionality to draw a border around a layer. I make the layer slightly smaller than the background layer, set its corner radius to the same value used for the background and simply set it to draw its border with a white color.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">-</span> <span class="p">(</span><span class="n">CALayer</span> <span class="o">*</span><span class="p">)</span><span class="n">setupBorderLayer</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="n">CALayer</span> <span class="o">*</span><span class="n">borderLayer</span> <span class="o">=</span> <span class="p">[</span><span class="n">CALayer</span> <span class="n">layer</span><span class="p">];</span>
+</span><span class='line'>    <span class="n">CGRect</span> <span class="n">borderRect</span> <span class="o">=</span> <span class="n">CGRectInset</span><span class="p">([</span><span class="n">self</span> <span class="n">frame</span><span class="p">],</span> <span class="mf">8.0f</span><span class="p">,</span> <span class="mf">8.0f</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">borderLayer</span> <span class="nl">setCornerRadius:</span><span class="mf">12.0f</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">borderLayer</span> <span class="nl">setBorderColor:</span><span class="n">CGColorGetConstantColor</span><span class="p">(</span><span class="n">kCGColorWhite</span><span class="p">)];</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">borderLayer</span> <span class="nl">setBorderWidth:</span><span class="mf">2.0f</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">borderLayer</span> <span class="nl">setFrame:</span><span class="n">borderRect</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">borderLayer</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Notice that I do not have to set any constraints here as I create the layer frame from simply shrinking the frame size on all sides which ensures it will be set in the middle already.</p>
+
+<h2>The Gloss Layer:</h2>
+
+<p>As a final touch I wanted to add the shine to give the clock a glossy look. The simplest way I could figure out to do this was to create a transparent image in Photoshop and setup the layer to draw it. Optimally it should be generated in code or at least use a scalable image to make the clock resizable without loosing any quality in the gloss layer.</p>
+
+<p>Even if we set the same corner radius as the background layer the layer will happily draw the image outside of this unless we call <code>setMasksToBounds</code> to ensure that it doesn&#8217;t draw the image outside of the rounded corners.</p>
+
+<figure class='code'><figcaption><span>setupGlossLayer</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">-</span> <span class="p">(</span><span class="n">CALayer</span> <span class="o">*</span><span class="p">)</span><span class="n">setupGlossLayer</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="n">CALayer</span> <span class="o">*</span><span class="n">glossLayer</span> <span class="o">=</span> <span class="p">[</span><span class="n">CALayer</span> <span class="n">layer</span><span class="p">];</span>
+</span><span class='line'>    <span class="n">NSString</span> <span class="o">*</span><span class="n">filePath</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSBundle</span> <span class="n">mainBundle</span><span class="p">]</span> <span class="nl">pathForResource:</span><span class="s">@&quot;clock-gloss&quot;</span> <span class="nl">ofType:</span><span class="s">@&quot;png&quot;</span><span class="p">];</span>
+</span><span class='line'>    <span class="n">NSURL</span> <span class="o">*</span><span class="n">fileURL</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSURL</span> <span class="nl">fileURLWithPath:</span><span class="n">filePath</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">CGImageSourceRef</span> <span class="n">glossySource</span> <span class="o">=</span> <span class="n">CGImageSourceCreateWithURL</span><span class="p">((</span><span class="n">CFURLRef</span><span class="p">)</span><span class="n">fileURL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">CGImageRef</span> <span class="n">glossyImage</span> <span class="o">=</span> <span class="n">CGImageSourceCreateImageAtIndex</span><span class="p">(</span><span class="n">glossySource</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">CFRelease</span><span class="p">(</span><span class="n">glossySource</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">glossLayer</span> <span class="nl">setContents:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="n">glossyImage</span><span class="p">];</span>
+</span><span class='line'>    <span class="n">CFRelease</span><span class="p">(</span><span class="n">glossyImage</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="p">[</span><span class="n">glossLayer</span> <span class="nl">setOpacity:</span><span class="mf">0.8f</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">glossLayer</span> <span class="nl">setCornerRadius:</span><span class="mf">12.0f</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">glossLayer</span> <span class="nl">setMasksToBounds:</span><span class="n">YES</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">glossLayer</span> <span class="nl">setFrame:</span><span class="p">[</span><span class="n">self</span> <span class="n">frame</span><span class="p">]];</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">glossLayer</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Finally I subclassed <code>NSWindow</code> in order to turn off the window decoration and shape the window as the background layer.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nl">initWithContentRect:</span><span class="p">(</span><span class="n">NSRect</span><span class="p">)</span><span class="n">contentRect</span>
+</span><span class='line'>                <span class="nl">styleMask:</span><span class="p">(</span><span class="n">NSUInteger</span><span class="p">)</span><span class="n">aStyle</span>
+</span><span class='line'>                  <span class="nl">backing:</span><span class="p">(</span><span class="n">NSBackingStoreType</span><span class="p">)</span><span class="n">bufferingType</span>
+</span><span class='line'>                    <span class="nl">defer:</span><span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="n">flag</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="n">self</span> <span class="o">=</span> <span class="p">[</span><span class="n">super</span> <span class="nl">initWithContentRect:</span><span class="n">contentRect</span>
+</span><span class='line'>                            <span class="nl">styleMask:</span><span class="n">NSBorderlessWindowMask</span>
+</span><span class='line'>                              <span class="nl">backing:</span><span class="n">bufferingType</span>
+</span><span class='line'>                                <span class="nl">defer:</span><span class="n">flag</span><span class="p">];</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="p">[</span><span class="n">self</span> <span class="nl">setOpaque:</span><span class="n">NO</span><span class="p">];</span>
+</span><span class='line'>        <span class="p">[</span><span class="n">self</span> <span class="nl">setBackgroundColor:</span><span class="p">[</span><span class="n">NSColor</span> <span class="n">clearColor</span><span class="p">]];</span>
+</span><span class='line'>        <span class="p">[</span><span class="n">self</span> <span class="nl">setMovableByWindowBackground:</span><span class="n">YES</span><span class="p">];</span>
+</span><span class='line'>        <span class="p">[</span><span class="n">self</span> <span class="nl">setLevel:</span><span class="n">NSPopUpMenuWindowLevel</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">self</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>NSBorderlessWindowMask</code> makes the window draw without the border and <code>setOpaque</code> together with setting the background color to <code>[NSColor clearColor]</code>. Using the <code>NSPopUpMenuWindowLevel</code> ensures that the clock is always on top of other windows.</p>
+
+<p>I hope you find this helpful and please make sure to subscribe to my feed if you did. I&#8217;ll do my best to answer any questions you might have in the comment section below.</p>
+
+<p>The full source as an Xcode project can be browsed at: <a href="http://github.com/mhallendal/glossyclock">Github</a> or <a href="http://github.com/mhallendal/glossyclock/zipball/master">downloaded</a>.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Mikael Hallendal</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-10-12T00:00:00+02:00" pubdate data-updated="true">Oct 12<span>th</span>, 2009</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://simplyhacking.com/core-animation-layered-clock.html" data-via="mhallendal" data-counturl="http://simplyhacking.com/core-animation-layered-clock.html" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/reverse-array-in-objc.html" title="Previous Post: Reversing an array in Objective C">&laquo; Reversing an array in Objective C</a>
+      
+      
+        <a class="basic-alignment right" href="/spacedust-xcode-theme.html" title="Next Post: Spacedust Xcode Theme">Spacedust Xcode Theme &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/mhconvore.html">Initial release of MHConvore</a>
+      </li>
+    
+      <li class="post">
+        <a href="/code-separation-using-blocks.html">Code Separation Using Blocks</a>
+      </li>
+    
+      <li class="post">
+        <a href="/debug-method-in-xcode.html">Debug Method in Xcode</a>
+      </li>
+    
+      <li class="post">
+        <a href="/spacedust-xcode-theme-for-xcode-4.html">Spacedust Xcode Theme for Xcode 4</a>
+      </li>
+    
+      <li class="post">
+        <a href="/spacedust-xcode-theme.html">Spacedust Xcode Theme</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/mhallendal">@mhallendal</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'mhallendal',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("mhallendal", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/mhallendal" class="twitter-follow-button" data-show-count="false">Follow @mhallendal</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - Mikael Hallendal -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'simplyhacking';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://simplyhacking.com/core-animation-layered-clock.html';
+        var disqus_url = 'http://simplyhacking.com/core-animation-layered-clock.html';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

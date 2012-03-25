@@ -1,0 +1,399 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Macruby Support in any Cocoa Application - Simply Hacking</title>
+  <meta name="author" content="Mikael Hallendal">
+
+  
+  <meta name="description" content="Yesterday I published a post about Cocoa Prototyping with Webview and today I found out about Macruby thanks to @sarnesjo. Already looking for ways &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://simplyhacking.com/macruby-support-in-any-cocoa-application.html">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Simply Hacking" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-755873-5']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Simply Hacking</a></h1>
+  
+    <h2>Mac OS X and iOS Programming</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:simplyhacking.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Macruby Support in Any Cocoa Application</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-05-06T00:00:00+02:00" pubdate data-updated="true">May 6<span>th</span>, 2009</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Yesterday I published a post about <a href="/cocoa-prototyping-with-webview.html">Cocoa Prototyping with Webview</a> and today I found out about <a href="http://www.macruby.org/">Macruby</a> thanks to <a href="http://twitter.com/sarnesjo">@sarnesjo</a>. Already looking for ways of prototyping in Cocoa it&#8217;s hard to not find Macruby very interesting.</p>
+
+<p>Macruby turns out to be a very powerful tool for prototyping (as well as writing entire applications in) as it fits perfectly fine in a normal Objective-C code base. What I wanted was something like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">SimpleController</span>
+</span><span class='line'>    <span class="kp">attr_accessor</span> <span class="ss">:label</span>
+</span><span class='line'>    <span class="kp">attr_accessor</span> <span class="ss">:button</span>
+</span><span class='line'>    <span class="kp">attr_accessor</span> <span class="ss">:my_view</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">buttonPressed</span><span class="p">(</span><span class="n">sender</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">label</span><span class="o">.</span><span class="n">setStringValue</span><span class="p">(</span><span class="s2">&quot;I am (im)pressed!&quot;</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">my_view</span><span class="o">.</span><span class="n">backgroundColor</span> <span class="o">=</span> <span class="no">NSColor</span><span class="o">.</span><span class="n">redColor</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Where the view <code>:my_view</code> is implemented in Objective-C.</p>
+
+<p>Here are the simple steps I used to hook it into a normal Xcode Cocoa project.</p>
+
+<p>First of all, install Macruby which is as easy as downloading the zip-file from the website and run the installer.</p>
+
+<p>In order to link to the Macruby framework you need to use garbage collection in your project, if you aren&#8217;t already you enable it in the project inspector:</p>
+
+<p><img src="/images/posts/macruby-in-xcode-gc.png" alt="Set the project to use Garbage Collection" /></p>
+
+<p>Next you need to make your project link against the Macruby framework:</p>
+
+<p><img src="/images/posts/macruby-in-xcode-add-framework.png" alt="Add the Macruby framework" /></p>
+
+<p>That&#8217;s it for the project settings, let&#8217;s hook it up in the code. When you use the built-in project template for a Macruby project a small Ruby file called <em>rb_main.rb</em> is created for you. Since I&#8217;m using a generic Cocoa application template I needed to create this file and simply copied the file into my new project (its code below). It loads all Ruby files in your bundle and starts the Cocoa main loop.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># Loading the Cocoa framework. If you need to load more frameworks, you can</span>
+</span><span class='line'><span class="c1"># do that here too.</span>
+</span><span class='line'><span class="n">framework</span> <span class="s1">&#39;Cocoa&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># Loading all the Ruby project files.</span>
+</span><span class='line'><span class="n">dir_path</span> <span class="o">=</span> <span class="no">NSBundle</span><span class="o">.</span><span class="n">mainBundle</span><span class="o">.</span><span class="n">resourcePath</span><span class="o">.</span><span class="n">fileSystemRepresentation</span>
+</span><span class='line'><span class="no">Dir</span><span class="o">.</span><span class="n">entries</span><span class="p">(</span><span class="n">dir_path</span><span class="p">)</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">path</span><span class="o">|</span>
+</span><span class='line'>  <span class="k">if</span> <span class="n">path</span> <span class="o">!=</span> <span class="no">File</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="bp">__FILE__</span><span class="p">)</span> <span class="ow">and</span> <span class="n">path</span><span class="o">[-</span><span class="mi">3</span><span class="o">.</span><span class="n">.</span><span class="o">-</span><span class="mi">1</span><span class="o">]</span> <span class="o">==</span> <span class="s1">&#39;.rb&#39;</span>
+</span><span class='line'>    <span class="nb">require</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># Starting the Cocoa main loop.</span>
+</span><span class='line'><span class="no">NSApplicationMain</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="kp">nil</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To start the actual Ruby interpreter the file <em>main.m</em> needs to be modified. Since the Ruby code now starts the Cocoa main loop we no longer need to do that in <code>main</code>. <em>Main.m</em> simply becomes:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#import &lt;MacRuby/MacRuby.h&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">macruby_main</span><span class="p">(</span><span class="s">&quot;rb_main.rb&quot;</span><span class="p">,</span> <span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>With these changes you can now start writing code in either Ruby or Objective-C within the same project. Here are the files I ended up with in my very small example.</p>
+
+<p><img src="/images/posts/macruby-in-xcode-files.png" alt="Example Files" /></p>
+
+<p>The final application simply shows a small window with a button:</p>
+
+<p><img src="/images/posts/macruby-in-xcode-example.png" alt="Example window" /></p>
+
+<p>Make sure to watch the great <a href="http://pragmaticstudio.com/screencasts/6-macruby">introductionary screencast</a> then download the example project and get started tinkering.</p>
+
+<p><a href="/downloads/posts/ObjcMacRuby.tar.gz">Example project</a></p>
+
+<p>If you find this as cool and useful as I did, let me hear about it!</p>
+
+<p><strong>Edit:</strong> Be sure to read Laurents comment below for an alternative way of loading your Ruby files into your application.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Mikael Hallendal</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-05-06T00:00:00+02:00" pubdate data-updated="true">May 6<span>th</span>, 2009</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://simplyhacking.com/macruby-support-in-any-cocoa-application.html" data-via="mhallendal" data-counturl="http://simplyhacking.com/macruby-support-in-any-cocoa-application.html" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/cocoa-prototyping-with-webview.html" title="Previous Post: Cocoa Prototyping with Webview">&laquo; Cocoa Prototyping with Webview</a>
+      
+      
+        <a class="basic-alignment right" href="/reverse-array-in-objc.html" title="Next Post: Reversing an array in Objective C">Reversing an array in Objective C &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/mhconvore.html">Initial release of MHConvore</a>
+      </li>
+    
+      <li class="post">
+        <a href="/code-separation-using-blocks.html">Code Separation Using Blocks</a>
+      </li>
+    
+      <li class="post">
+        <a href="/debug-method-in-xcode.html">Debug Method in Xcode</a>
+      </li>
+    
+      <li class="post">
+        <a href="/spacedust-xcode-theme-for-xcode-4.html">Spacedust Xcode Theme for Xcode 4</a>
+      </li>
+    
+      <li class="post">
+        <a href="/spacedust-xcode-theme.html">Spacedust Xcode Theme</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/mhallendal">@mhallendal</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'mhallendal',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("mhallendal", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/mhallendal" class="twitter-follow-button" data-show-count="false">Follow @mhallendal</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - Mikael Hallendal -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'simplyhacking';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://simplyhacking.com/macruby-support-in-any-cocoa-application.html';
+        var disqus_url = 'http://simplyhacking.com/macruby-support-in-any-cocoa-application.html';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,703 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Simply Hacking</title>
+  <meta name="author" content="Mikael Hallendal">
+
+  
+  <meta name="description" content="Last week I decided to look into how to create a source list that is backed by Core Data with section headers created from code. New to Cocoa I set &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://simplyhacking.com/blog/page/2/index.html">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Simply Hacking" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-755873-5']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Simply Hacking</a></h1>
+  
+    <h2>Mac OS X and iOS Programming</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:simplyhacking.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/source-list-with-core-data.html">Source List With Core Data</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-04-06T00:00:00+02:00" pubdate data-updated="true">Apr 6<span>th</span>, 2009</time>
+        
+         | <a href="/source-list-with-core-data.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Last week I decided to look into how to create a source list that is backed by Core Data with section headers created from code. New to Cocoa I set out to Google for a solution but surprisingly enough I didn&#8217;t find a lot about how to achieve this (or I simply googled for the wrong things). After a few days I managed to derive, what I believe, an elegant solution to this and figured it could be useful for others wanting to do this.</p>
+
+<p><img src="/images/posts/sl-cd-result.png" alt="The planned source list" /></p>
+
+<h2>Approaches</h2>
+
+<p>My first plan was to create some kind of layer in between Core Data and the NSTreeController but that quickly added a lot of complexity and code. The second solution was to create the headers and put them in Core Data the first time you start the application. While this was easily done it felt a bit hackish.</p>
+
+<p>After spending a couple of days with this, trying out various solutions and ideas me and <a href="http://twitter.com/rhult">Richard</a> discussed the topic, wondering if maybe Core Data had some builtin support for this.</p>
+
+<p>Twenty minutes and some fifty lines of code later I looked at the screen, amazed at how awesome Core Data is. This is what I ended up with, mind though that it&#8217;s not a full tutorial but only the crucial steps, you still need to know how to connect it all with the NSTreeController and NSOutlineView.</p>
+
+<h2>The Solution</h2>
+
+<p>The idea is to use two different persistent stores, the regular XML store and an in memory store for the code generated entites.</p>
+
+<p>For the purpose of this example the data model is very simple, two entities called <em>Section</em> (for the code generated section headers) and <em>Item</em> (for the entities that are read from Core Data).</p>
+
+<p><em>Section</em> will have a <code>name</code> attribute and a one-to-many relationship to <em>Item</em> called <code>children</code>. <em>Item</em> will have a <code>name</code> and a reverse to-one relationship back to <em>Section</em> called <code>section</code>. Make sure you <strong>make this relationship transient</strong> to tell Core Data that this relationship only exists runtime and should not be stored.</p>
+
+<p><img src="/images/posts/sl-cd-datamodel1.png" alt="The data model" /></p>
+
+<p>The <em>NSTreeController</em> has a property called <code>childrenKeyPath</code> that defines the key path to retrieve an array of children from each of the nodes in the tree. All nodes displayed in the tree need to respond to this key path. Since <em>Item</em>s don&#8217;t have children it is not included in the data model (though you could have added it in the model designer but in my opinion isn&#8217;t as nice), I will instead create a subclass of <em>NSManagedObject</em> to represent an <em>Item</em>.</p>
+
+<p>Select the <em>Item</em> entity in the model designer and create a new file (File->New File and choose Managed Object Class from the Cocoa section). Simply name it Item.m (and check the <em>Also create &#8220;Item.h&#8221;</em>) box. Add a method <code>children</code> to your <em>Item</em> class.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cm">/* In Item.h */</span>
+</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="n">children</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="cm">/* In Item.m */</span>
+</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="n">children</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nb">nil</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This method will be called by the NSTreeController when it is populating the tree and since an <em>Item</em> doesn&#8217;t have any children it should return <code>nil</code>.</p>
+
+<p>That&#8217;s it for the model, time to setup the stores.</p>
+
+<p>I extended the method <code>persistentStoreCoordinator</code> in the auto generated application delegate to create a second store with the URL <em>memory://store</em>. This store should be of the type <code>NSInMemoryStoreType</code> which means that any entity tied to it won&#8217;t be saved to disk.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">url</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSURL</span> <span class="nl">URLWithString:</span><span class="s">@&quot;memory://store&quot;</span><span class="p">];</span>
+</span><span class='line'><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">[</span><span class="n">persistentStoreCoordinator</span> <span class="nl">addPersistentStoreWithType:</span><span class="n">NSInMemoryStoreType</span>
+</span><span class='line'>                                              <span class="nl">configuration:</span><span class="nb">nil</span>
+</span><span class='line'>                                                        <span class="nl">URL:</span><span class="n">url</span>
+</span><span class='line'>                                                    <span class="nl">options:</span><span class="nb">nil</span>
+</span><span class='line'>                                                      <span class="nl">error:</span><span class="o">&amp;</span><span class="n">error</span><span class="p">])</span> <span class="p">{</span>
+</span><span class='line'>    <span class="p">[[</span><span class="n">NSApplication</span> <span class="n">sharedApplication</span><span class="p">]</span> <span class="nl">presentError:</span><span class="n">error</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Both of these stores act in the same context so the layers on top of Core Data won&#8217;t know the difference between entites in one store or another.</p>
+
+<p>With the store in place the <em>Section</em> entities are created when the application is started, I added the code to the application delegate init method. After I create the <em>Section</em> I populate it with the result of fetching all my <em>Item</em> entities from Core Data (lines 30-33 below).</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">-</span> <span class="p">(</span><span class="n">NSArray</span> <span class="o">*</span><span class="p">)</span><span class="nl">fetchAllWithEntity:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="n">entity</span>
+</span><span class='line'>                          <span class="nl">error:</span><span class="p">(</span><span class="n">NSError</span> <span class="o">**</span><span class="p">)</span><span class="n">error</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="n">NSFetchRequest</span> <span class="o">*</span><span class="n">request</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">NSEntityDescription</span> <span class="o">*</span><span class="n">desc</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">desc</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSEntityDescription</span> <span class="nl">entityForName:</span><span class="n">entity</span>
+</span><span class='line'>                       <span class="nl">inManagedObjectContext:</span><span class="p">[</span><span class="n">self</span> <span class="n">managedObjectContext</span><span class="p">]];</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">request</span> <span class="o">=</span> <span class="p">[[[</span><span class="n">NSFetchRequest</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">]</span> <span class="n">autorelease</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">request</span> <span class="nl">setEntity:</span><span class="n">desc</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="p">[[</span><span class="n">self</span> <span class="n">managedObjectContext</span><span class="p">]</span> <span class="nl">executeFetchRequest:</span><span class="n">request</span> <span class="nl">error:</span><span class="n">error</span><span class="p">];</span> 
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="n">init</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">super</span> <span class="n">init</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">NSError</span> <span class="o">*</span><span class="n">error</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">NSURL</span> <span class="o">*</span><span class="n">url</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSURL</span> <span class="nl">URLWithString:</span><span class="s">@&quot;memory://store&quot;</span><span class="p">];</span>
+</span><span class='line'>    <span class="kt">id</span> <span class="n">memoryStore</span> <span class="o">=</span> <span class="p">[[</span><span class="n">self</span> <span class="n">persistentStoreCoordinator</span><span class="p">]</span> <span class="nl">persistentStoreForURL:</span><span class="n">url</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">section</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSEntityDescription</span> <span class="nl">insertNewObjectForEntityForName:</span><span class="s">@&quot;Section&quot;</span>
+</span><span class='line'>                                             <span class="nl">inManagedObjectContext:</span><span class="p">[</span><span class="n">self</span> <span class="n">managedObjectContext</span><span class="p">]]</span> <span class="n">retain</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">section</span> <span class="nl">setValue:</span><span class="s">@&quot;My section&quot;</span> <span class="nl">forKey:</span><span class="s">@&quot;name&quot;</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">[[</span><span class="n">self</span> <span class="n">managedObjectContext</span><span class="p">]</span> <span class="nl">assignObject:</span><span class="n">section</span>
+</span><span class='line'>                            <span class="nl">toPersistentStore:</span><span class="n">memoryStore</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">NSArray</span> <span class="o">*</span><span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span> <span class="nl">fetchAllWithEntity:</span><span class="s">@&quot;Item&quot;</span> <span class="nl">error:</span><span class="o">&amp;</span><span class="n">error</span><span class="p">];</span>
+</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="kt">id</span> <span class="n">item</span> <span class="k">in</span> <span class="n">items</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="p">[</span><span class="n">item</span> <span class="nl">setValue:</span><span class="n">section</span> <span class="nl">forKey:</span><span class="s">@&quot;section&quot;</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">self</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Here the message <code>assignObject:toPersistentStore:</code> is sent to the <code>NSManagedObjectContext</code> to put the newly created <em>Section</em> in the in memory store so that it is not saved to disk with the <em>Item</em>s.</p>
+
+<p>I also added an action to my application delegate to create new <em>Item</em>s and make them children to the <em>Section</em>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nl">addItem:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="n">sender</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="kt">id</span> <span class="n">newObject</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSEntityDescription</span> <span class="nl">insertNewObjectForEntityForName:</span><span class="s">@&quot;Item&quot;</span>
+</span><span class='line'>                                                 <span class="nl">inManagedObjectContext:</span><span class="p">[</span><span class="n">self</span> <span class="n">managedObjectContext</span><span class="p">]];</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">newObject</span> <span class="nl">setValue:</span><span class="n">section</span> <span class="nl">forKey:</span><span class="s">@&quot;section&quot;</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That&#8217;s it! Now a regular <code>NSTreeController</code> can be used in entity mode by setting the entity to <em>Section</em> as you would normally do.</p>
+
+<p>I hope you found it useful, if you did, make sure you share it with your friends and subscribe to my <a href="http://simplyhacking.com/atom.xml">RSS feed</a> or <a href="http://twitter.com/mhallendal">follow me on twitter</a> for notifications about future posts.</p>
+
+<p>I&#8217;d love to get feedback on better solutions, improvements or just comments on what you think.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/expanding-nsoutlineview-nodes-at-application-start.html">Expanding NSOutlineView Nodes at Application Start</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-04-06T00:00:00+02:00" pubdate data-updated="true">Apr 6<span>th</span>, 2009</time>
+        
+         | <a href="/expanding-nsoutlineview-nodes-at-application-start.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>A problem when you want to expand some items in an <em>NSOutlineView</em> programatically at application start is that the <em>NSTreeController</em> prepares it&#8217;s content after <code>awakeFromNib</code> is called on your controller.</p>
+
+<p>To ensure that the data is loaded before you try to expand the items you can observe the <code>content</code> key on the tree controller and expand the nodes as you receive the the <code>observeValueForKeyPath:</code> message as shown below:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nl">observeValueForKeyPath:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="n">keyPath</span>
+</span><span class='line'>                      <span class="nl">ofObject:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="n">object</span>
+</span><span class='line'>                        <span class="nl">change:</span><span class="p">(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="n">change</span>
+</span><span class='line'>                       <span class="nl">context:</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="n">context</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">object</span> <span class="o">==</span> <span class="n">treeController</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="c1">// Expand the first row (which is our section header)</span>
+</span><span class='line'>        <span class="p">[</span><span class="n">sourceList</span> <span class="nl">expandItem:</span><span class="p">[</span><span class="n">sourceList</span> <span class="nl">itemAtRow:</span><span class="mi">0</span><span class="p">]</span>
+</span><span class='line'>                <span class="nl">expandChildren:</span><span class="n">NO</span><span class="p">];</span>
+</span><span class='line'>        <span class="p">[</span><span class="n">treeController</span> <span class="nl">removeObserver:</span><span class="n">self</span>
+</span><span class='line'>                            <span class="nl">forKeyPath:</span><span class="s">@&quot;content&quot;</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">awakeFromNib</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="c1">// Listen on the treeController to expand the root node </span>
+</span><span class='line'>    <span class="c1">// when it has prepared it&#39;s content.</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">treeController</span> <span class="nl">addObserver:</span><span class="n">self</span>
+</span><span class='line'>                     <span class="nl">forKeyPath:</span><span class="s">@&quot;content&quot;</span>
+</span><span class='line'>                        <span class="nl">options:</span><span class="mi">0</span>
+</span><span class='line'>                        <span class="nl">context:</span><span class="nb">nil</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/nstreecontroller-wrapping-object.html">Retrieving the Real Object When Using NSOutlineView With an NSTreeController</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-04-04T00:00:00+02:00" pubdate data-updated="true">Apr 4<span>th</span>, 2009</time>
+        
+         | <a href="/nstreecontroller-wrapping-object.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>As I just started out with Cocoa and started looking into the NSTreeController and NSOutlineView I realized that the objects seen by the outline view isn&#8217;t the same as the ones you see when working with the tree controller.</p>
+
+<p>The NSTreeController wraps your objects into another object and it took me some digging before I realized that you need to call <code>representedObject</code> to fetch the <em>real</em> object.</p>
+
+<p>Example from implementing an NSOutlineView delegate:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cm">/* NSOutlineView Delegate Method */</span>
+</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nl">outlineView:</span><span class="p">(</span><span class="n">NSOutlineView</span> <span class="o">*</span><span class="p">)</span><span class="n">view</span>
+</span><span class='line'>        <span class="nl">isGroupItem:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="n">item</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">([</span><span class="n">item</span> <span class="n">representedObject</span><span class="p">]</span> <span class="o">==</span> <span class="n">section</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">YES</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">NO</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/removing-a-remote-branch-in-git.html">Removing a Remote Branch in Git</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-06-21T00:00:00+02:00" pubdate data-updated="true">Jun 21<span>st</span>, 2008</time>
+        
+         | <a href="/removing-a-remote-branch-in-git.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><strong>This is a repost from my old blog</strong></p>
+
+<p>This is something I’ve had to checkup a few times so I figured it would be useful both for myself and for others to keep around in a blog post.</p>
+
+<p>To remove a remote branch you created in Git just push to it like:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git push origin :name-of-branch
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/using-twitter4r-on-mac-os-x.html">Using Twitter4R on Mac OS X</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-05-31T00:00:00+02:00" pubdate data-updated="true">May 31<span>st</span>, 2008</time>
+        
+         | <a href="/using-twitter4r-on-mac-os-x.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><strong>This is a repost from my old blog</strong></p>
+
+<p>Was playing around a bit with the Twitter4R library the other day and realized that in order to make it to work on Mac OS X (Leopard) you need to also require ‘time’. Or you will get an error similar to</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>lib/twitter/model.rb:268:in <span class="sb">`</span>initâ: undefined method <span class="sb">`</span>parseâ <span class="k">for </span>Time:Class <span class="o">(</span>NoMethodError<span class="o">)</span>.
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A small snippet to display my public tweets:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;rubygems&#39;</span>
+</span><span class='line'><span class="n">gem</span><span class="p">(</span><span class="s1">&#39;twitter4r&#39;</span><span class="p">,</span> <span class="s1">&#39;0.3.0&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;twitter&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># Required on Mac OS X Leopard</span>
+</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;time&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">twitter</span> <span class="o">=</span> <span class="no">Twitter</span><span class="o">::</span><span class="no">Client</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">m5h_timeline</span> <span class="o">=</span> <span class="n">twitter</span><span class="o">.</span><span class="n">timeline_for</span><span class="p">(</span><span class="ss">:user</span><span class="p">,</span> <span class="ss">:id</span> <span class="o">=&gt;</span> <span class="s1">&#39;m5h&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">m5h_timeline</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">status</span><span class="o">|</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="n">status</span><span class="o">.</span><span class="n">text</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/mhconvore.html">Initial release of MHConvore</a>
+      </li>
+    
+      <li class="post">
+        <a href="/code-separation-using-blocks.html">Code Separation Using Blocks</a>
+      </li>
+    
+      <li class="post">
+        <a href="/debug-method-in-xcode.html">Debug Method in Xcode</a>
+      </li>
+    
+      <li class="post">
+        <a href="/spacedust-xcode-theme-for-xcode-4.html">Spacedust Xcode Theme for Xcode 4</a>
+      </li>
+    
+      <li class="post">
+        <a href="/spacedust-xcode-theme.html">Spacedust Xcode Theme</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/mhallendal">@mhallendal</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'mhallendal',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("mhallendal", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/mhallendal" class="twitter-follow-button" data-show-count="false">Follow @mhallendal</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - Mikael Hallendal -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'simplyhacking';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
